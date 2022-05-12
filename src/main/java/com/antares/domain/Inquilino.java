@@ -9,10 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "usuarios")
-public class Usuario implements Serializable {
+@Entity(name = "inquilinos")
+public class Inquilino implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -24,13 +24,12 @@ public class Usuario implements Serializable {
 	private String estadoCivil;
 	private String genero;
 	private String email;
-	private String password;
 
-	public Usuario() {
+	public Inquilino() {
 	}
 
-	public Usuario(Integer id, String nome, Date dataNascimento, String rg, String cpf, String profissao,
-			String estadoCivil, String genero, String email, String password) {
+	public Inquilino(Integer id, String nome, Date dataNascimento, String rg, String cpf, String profissao,
+			String estadoCivil, String genero, String email) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -41,7 +40,6 @@ public class Usuario implements Serializable {
 		this.estadoCivil = estadoCivil;
 		this.genero = genero;
 		this.email = email;
-		this.password = password;
 	}
 
 	public Integer getId() {
@@ -116,19 +114,11 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", rg=" + rg + ", cpf="
+		return "Inquilino [id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", rg=" + rg + ", cpf="
 				+ cpf + ", profissao=" + profissao + ", estadoCivil=" + estadoCivil + ", genero=" + genero + ", email="
-				+ email + ", password=" + password + "]";
+				+ email + "]";
 	}
 
 	@Override
@@ -144,10 +134,8 @@ public class Usuario implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		Inquilino other = (Inquilino) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
+
 }

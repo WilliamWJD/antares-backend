@@ -16,11 +16,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	private PasswordEncoder passwordEncoder;
-	
 	public Usuario save(Usuario usuario) {
-		this.passwordEncoder = new BCryptPasswordEncoder();
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encoderPassword = passwordEncoder.encode(usuario.getPassword());
+		
 		usuario.setPassword(encoderPassword);
 		return usuarioRepository.save(usuario);
 	}

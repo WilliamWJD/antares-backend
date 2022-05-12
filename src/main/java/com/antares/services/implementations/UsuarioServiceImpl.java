@@ -1,6 +1,8 @@
 package com.antares.services.implementations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.antares.domain.Usuario;
@@ -13,8 +15,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-
+	
+	private PasswordEncoder passwordEncoder;
+	
 	public Usuario save(Usuario usuario) {
+		this.passwordEncoder = new BCryptPasswordEncoder();
+		String encoderPassword = passwordEncoder.encode(usuario.getPassword());
+		usuario.setPassword(encoderPassword);
 		return usuarioRepository.save(usuario);
 	}
 

@@ -8,6 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "inquilinos")
 public class Inquilino implements Serializable {
@@ -24,12 +28,16 @@ public class Inquilino implements Serializable {
 	private String estadoCivil;
 	private String genero;
 	private String email;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
+	
 	public Inquilino() {
 	}
 
 	public Inquilino(Integer id, String nome, Date dataNascimento, String rg, String cpf, String profissao,
-			String estadoCivil, String genero, String email) {
+			String estadoCivil, String genero, String email, Usuario usuario) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -40,6 +48,7 @@ public class Inquilino implements Serializable {
 		this.estadoCivil = estadoCivil;
 		this.genero = genero;
 		this.email = email;
+		this.setUsuario(usuario);
 	}
 
 	public Integer getId() {
@@ -113,12 +122,20 @@ public class Inquilino implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	@Override
 	public String toString() {
 		return "Inquilino [id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", rg=" + rg + ", cpf="
 				+ cpf + ", profissao=" + profissao + ", estadoCivil=" + estadoCivil + ", genero=" + genero + ", email="
-				+ email + "]";
+				+ email + ", usuario=" + usuario + "]";
 	}
 
 	@Override
@@ -137,5 +154,4 @@ public class Inquilino implements Serializable {
 		Inquilino other = (Inquilino) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }

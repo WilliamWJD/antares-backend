@@ -11,12 +11,13 @@ public class InquilinoNewDto {
 	private String estadoCivil;
 	private String genero;
 	private String email;
+	private Integer usuario_id;
 	
 	public InquilinoNewDto() {
 	}
 
 	public InquilinoNewDto(String nome, Date dataNascimento, String rg, String cpf, String profissao,
-			String estadoCivil, String genero, String email) {
+			String estadoCivil, String genero, String email, Integer usuario_id) {
 		super();
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
@@ -26,6 +27,7 @@ public class InquilinoNewDto {
 		this.estadoCivil = estadoCivil;
 		this.genero = genero;
 		this.email = email;
+		this.setUsuario_id(usuario_id);
 	}
 
 	public String getNome() {
@@ -91,13 +93,19 @@ public class InquilinoNewDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public Integer getUsuario_id() {
+		return usuario_id;
+	}
+
+	public void setUsuario_id(Integer usuario_id) {
+		this.usuario_id = usuario_id;
+	}
 
 	@Override
 	public String toString() {
 		return "InquilinoNewDto [nome=" + nome + ", dataNascimento=" + dataNascimento + ", rg=" + rg + ", cpf=" + cpf
 				+ ", profissao=" + profissao + ", estadoCivil=" + estadoCivil + ", genero=" + genero + ", email="
-				+ email + "]";
-	}
-	
-	
+				+ email + ", usuario_id=" + usuario_id + "]";
+	}	
 }

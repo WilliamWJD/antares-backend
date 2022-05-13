@@ -1,13 +1,19 @@
 package com.antares.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "usuarios")
 public class Usuario implements Serializable {
@@ -25,7 +31,11 @@ public class Usuario implements Serializable {
 	private String genero;
 	private String email;
 	private String password;
-
+	
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Inquilino> inquilinos = new ArrayList<>();
+	
 	public Usuario() {
 	}
 
@@ -124,11 +134,19 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
+	public List<Inquilino> getInquilinos() {
+		return inquilinos;
+	}
+
+	public void setInquilinos(List<Inquilino> inquilinos) {
+		this.inquilinos = inquilinos;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", dataNascimento=" + dataNascimento + ", rg=" + rg + ", cpf="
 				+ cpf + ", profissao=" + profissao + ", estadoCivil=" + estadoCivil + ", genero=" + genero + ", email="
-				+ email + ", password=" + password + "]";
+				+ email + ", password=" + password + ", inquilinos=" + inquilinos + "]";
 	}
 
 	@Override

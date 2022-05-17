@@ -1,9 +1,12 @@
 package com.antares.resources;
 
 import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -28,5 +31,11 @@ public class InquilinoResource {
 		inquilinoService.save(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Inquilino>> findAllInquilinosByUser(@RequestHeader Integer usuario_id){
+		List<Inquilino> inquilinos = inquilinoService.findAllInquilinosByUsuario(usuario_id);
+		return ResponseEntity.ok().body(inquilinos);
 	}
 }

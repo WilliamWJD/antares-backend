@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
 	private String email;
 	private String password;
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	@JsonIgnore
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Inquilino> inquilinos = new ArrayList<>();
 }

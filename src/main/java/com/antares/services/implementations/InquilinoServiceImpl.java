@@ -36,8 +36,8 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public List<Inquilino> findAllInquilinosByUsuario(Integer user_id) {
-		return null;
+	public List<Inquilino> findAllInquilinosByUsuario(Integer usuario_id) {
+		return inquilinoRepository.findInquilinoByUser(usuario_id);
 	}
 
 }

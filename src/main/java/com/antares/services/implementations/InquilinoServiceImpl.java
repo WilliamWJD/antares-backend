@@ -1,5 +1,6 @@
 package com.antares.services.implementations;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class InquilinoServiceImpl implements InquilinoService {
 		return new Inquilino(null, inquilinoDTO.getNome(), inquilinoDTO.getDataNascimento(), inquilinoDTO.getRg(),
 				inquilinoDTO.getCpf(), inquilinoDTO.getProfissao(), inquilinoDTO.getEstadoCivil(),
 				inquilinoDTO.getGenero(), inquilinoDTO.getEmail(), usuario.get());
+	}
+
+	@Override
+	public List<Inquilino> findAllInquilinosByUsuario(Integer user_id) {
+		return null;
 	}
 
 }

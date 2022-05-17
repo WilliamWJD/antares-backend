@@ -11,9 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity(name = "inquilinos")
+@Entity
 public class Inquilino implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +30,7 @@ public class Inquilino implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
-	
+
 	public Inquilino() {
 	}
 
@@ -122,7 +120,7 @@ public class Inquilino implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}

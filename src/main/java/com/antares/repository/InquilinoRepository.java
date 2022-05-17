@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.antares.domain.Inquilino;
 
+import java.util.List;
+
 @Repository
 public interface InquilinoRepository extends JpaRepository<Inquilino, Integer>{
-
+    List<Inquilino> findAll();
 }

@@ -27,6 +27,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario fromDTO(UsuarioNewDTO usuarioDTO) {
 		return new Usuario(null, usuarioDTO.getNome(), usuarioDTO.getDataNascimento(), usuarioDTO.getRg(),
 				usuarioDTO.getCpf(), usuarioDTO.getProfissao(), usuarioDTO.getEstadoCivil(), usuarioDTO.getGenero(),
-				usuarioDTO.getEmail(), usuarioDTO.getPassword());
+				usuarioDTO.getEmail(), usuarioDTO.getPassword(), null);
 	}
 }

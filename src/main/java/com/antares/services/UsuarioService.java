@@ -1,7 +1,8 @@
 package com.antares.services;
 
-import com.antares.domain.Usuario;
+import com.antares.dto.UsuarioCadastroDTO;
+import com.antares.dto.UsuarioDTO;
 
 public interface UsuarioService {
-	public Usuario save(Usuario usuario);
+	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO);
 }

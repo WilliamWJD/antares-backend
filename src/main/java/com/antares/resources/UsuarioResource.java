@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.antares.domain.Usuario;
-import com.antares.dto.UsuarioNewDTO;
+import com.antares.dto.UsuarioCadastroDTO;
+import com.antares.dto.UsuarioDTO;
 import com.antares.services.implementations.UsuarioServiceImpl;
 
 @Controller
@@ -22,10 +23,9 @@ public class UsuarioResource {
 	private UsuarioServiceImpl usuarioService;
 	
 	@PostMapping
-	public ResponseEntity<Usuario> save(@RequestBody UsuarioNewDTO usuario){
-		Usuario obj = usuarioService.fromDTO(usuario);
-		usuarioService.save(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioCadastroDTO usuario){
+		UsuarioDTO obj = usuarioService.save(usuario);
+		usuarioService.save(usuario);
+		return ResponseEntity.ok().body(obj);
 	}
 }

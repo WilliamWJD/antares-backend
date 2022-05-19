@@ -21,7 +21,6 @@ public class UsuarioResource {
 	@PostMapping
 	public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioCadastroDTO usuario) {
 		UsuarioDTO obj = usuarioService.save(usuario);
-		usuarioService.save(usuario);
 		return ResponseEntity.ok().body(obj);
 	}
 }

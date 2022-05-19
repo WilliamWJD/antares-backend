@@ -2,6 +2,7 @@ package com.antares.services.implementations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -27,14 +28,17 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer user_id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(user_id);
-		inquilinoCadastroDTO.setUsuario(usuario.get());
-		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
-		return modelMapper.map(inquilino, InquilinoDTO.class);
+		if (usuario.isPresent()) {
+			inquilinoCadastroDTO.setUsuario(usuario.get());
+			Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
+			return modelMapper.map(inquilino, InquilinoDTO.class);
+		}
+		return null;
 	}
 
 	@Override
-	public List<Inquilino> findAllInquilinosByUsuario(Integer usuario_id) {
-		return inquilinoRepository.findInquilinoByUser(usuario_id);
+	public List<InquilinoDTO> findAllInquilinosByUsuario(Integer usuario_id) {
+		return inquilinoRepository.findByUsuarioId(usuario_id).stream()
+				.map(inqui -> modelMapper.map(inqui, InquilinoDTO.class)).collect(Collectors.toList());
 	}
-
 }

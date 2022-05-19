@@ -1,8 +1,5 @@
 package com.antares.resources;
 
-import java.net.URI;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.antares.domain.Inquilino;
 import com.antares.dto.InquilinoCadastroDto;
 import com.antares.dto.InquilinoDTO;
 import com.antares.services.implementations.InquilinoServiceImpl;
@@ -33,8 +28,7 @@ public class InquilinoResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Inquilino>> findAllInquilinosByUser(@RequestHeader Integer usuario_id){
-		List<Inquilino> inquilinos = inquilinoService.findAllInquilinosByUsuario(usuario_id);
-		return ResponseEntity.ok().body(inquilinos);
+	public ResponseEntity<?> findAllInquilinosByUser(@RequestHeader Integer usuario_id){
+		return ResponseEntity.ok().body(inquilinoService.findAllInquilinosByUsuario(usuario_id));
 	}
 }

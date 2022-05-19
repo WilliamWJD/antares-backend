@@ -2,8 +2,6 @@ package com.antares.dto;
 
 import java.util.Date;
 
-import com.antares.domain.Usuario;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

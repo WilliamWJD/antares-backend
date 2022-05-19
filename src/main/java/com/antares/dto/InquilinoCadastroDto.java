@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class InquilinoDTO {
-	private Integer id;
+public class InquilinoCadastroDto {
 	private String nome;
 	private Date dataNascimento;
 	private String rg;
@@ -23,5 +22,5 @@ public class InquilinoDTO {
 	private String estadoCivil;
 	private String genero;
 	private String email;
-	private UsuarioDTO usuario;
+	private Usuario usuario;
 }

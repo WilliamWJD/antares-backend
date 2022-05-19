@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.antares.domain.Inquilino;
-import com.antares.dto.InquilinoNewDto;
+import com.antares.dto.InquilinoCadastroDto;
+import com.antares.dto.InquilinoDTO;
 import com.antares.services.implementations.InquilinoServiceImpl;
 
 @Controller
@@ -25,12 +27,9 @@ public class InquilinoResource {
 	private InquilinoServiceImpl inquilinoService;
 	
 	@PostMapping
-	public ResponseEntity<Inquilino> save(@RequestBody InquilinoNewDto inquilino, @RequestHeader Integer user_id){
-		inquilino.setUsuario_id(user_id);
-		Inquilino obj = inquilinoService.fromDTO(inquilino);
-		inquilinoService.save(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+	public ResponseEntity<InquilinoDTO> save(@RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer user_id){
+		InquilinoDTO inqui = inquilinoService.save(inquilino, user_id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(inqui);
 	}
 	
 	@GetMapping

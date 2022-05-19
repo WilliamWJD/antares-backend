@@ -3,36 +3,33 @@ package com.antares.services.implementations;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.antares.domain.Inquilino;
 import com.antares.domain.Usuario;
-import com.antares.dto.InquilinoNewDto;
+import com.antares.dto.InquilinoCadastroDto;
+import com.antares.dto.InquilinoDTO;
 import com.antares.repository.InquilinoRepository;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.InquilinoService;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class InquilinoServiceImpl implements InquilinoService {
 
-	@Autowired
-	private InquilinoRepository inquilinoRepository;
-	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private final InquilinoRepository inquilinoRepository;
+	private final UsuarioRepository usuarioRepository;
+	private final ModelMapper modelMapper;
 
 	@Override
-	public Inquilino save(Inquilino inquilino) {
-		return inquilinoRepository.save(inquilino);
-	}
-
-	public Inquilino fromDTO(InquilinoNewDto inquilinoDTO) {
-		Optional<Usuario> usuario = usuarioRepository.findById(inquilinoDTO.getUsuario_id());
-		
-		return new Inquilino(null, inquilinoDTO.getNome(), inquilinoDTO.getDataNascimento(), inquilinoDTO.getRg(),
-				inquilinoDTO.getCpf(), inquilinoDTO.getProfissao(), inquilinoDTO.getEstadoCivil(),
-				inquilinoDTO.getGenero(), inquilinoDTO.getEmail(), usuario.get());
+	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer user_id) {
+		Optional<Usuario> usuario = usuarioRepository.findById(user_id);
+		inquilinoCadastroDTO.setUsuario(usuario.get());
+		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
+		return modelMapper.map(inquilino, InquilinoDTO.class);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.antares.resources;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +23,13 @@ public class InquilinoResource {
 	@Autowired
 	private InquilinoServiceImpl inquilinoService;
 	
-	@PostMapping("/save")
-	public ResponseEntity<InquilinoDTO> save(@RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer user_id){
+	@PostMapping
+	public ResponseEntity<InquilinoDTO> save(@Valid @RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer user_id){
 		InquilinoDTO inqui = inquilinoService.save(inquilino, user_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(inqui);
 	}
 	
-	@GetMapping("/list")
+	@GetMapping
 	public ResponseEntity<?> findAllInquilinosByUser(@RequestHeader Integer usuario_id){
 		return ResponseEntity.ok().body(inquilinoService.findAllInquilinosByUsuario(usuario_id));
 	}

@@ -21,13 +21,13 @@ public class InquilinoResource {
 	@Autowired
 	private InquilinoServiceImpl inquilinoService;
 	
-	@PostMapping
+	@PostMapping("/save")
 	public ResponseEntity<InquilinoDTO> save(@RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer user_id){
 		InquilinoDTO inqui = inquilinoService.save(inquilino, user_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(inqui);
 	}
 	
-	@GetMapping
+	@GetMapping("/list")
 	public ResponseEntity<?> findAllInquilinosByUser(@RequestHeader Integer usuario_id){
 		return ResponseEntity.ok().body(inquilinoService.findAllInquilinosByUsuario(usuario_id));
 	}

@@ -1,5 +1,7 @@
 package com.antares.resources;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,7 @@ public class UsuarioResource {
 	private UsuarioServiceImpl usuarioService;
 
 	@PostMapping
-	public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioCadastroDTO usuario) {
+	public ResponseEntity<UsuarioDTO> save(@Valid @RequestBody UsuarioCadastroDTO usuario) {
 		UsuarioDTO obj = usuarioService.save(usuario);
 		return ResponseEntity.ok().body(obj);
 	}

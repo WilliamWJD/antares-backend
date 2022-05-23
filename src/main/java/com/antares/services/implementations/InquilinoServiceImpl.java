@@ -1,10 +1,11 @@
 package com.antares.services.implementations;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.antares.domain.Inquilino;
@@ -37,8 +38,10 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public List<InquilinoDTO> findAllInquilinosByUsuario(Integer usuario_id) {
-		return inquilinoRepository.findByUsuarioId(usuario_id).stream()
-				.map(inqui -> modelMapper.map(inqui, InquilinoDTO.class)).collect(Collectors.toList());
+	public Page<Inquilino> findAllInquilinosByUsuario(Integer usuario_id, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Page<Inquilino> inquilinos = inquilinoRepository.findByUsuarioId(usuario_id, pageRequest);
+		return inquilinos;
 	}
+
 }

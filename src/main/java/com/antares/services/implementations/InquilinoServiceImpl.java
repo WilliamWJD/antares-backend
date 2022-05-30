@@ -15,6 +15,7 @@ import com.antares.dto.InquilinoDTO;
 import com.antares.repository.InquilinoRepository;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.InquilinoService;
+import com.antares.services.exceptions.ObjectNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,10 +39,23 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public Page<Inquilino> findAllInquilinosByUsuario(Integer usuario_id, Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Inquilino> findAllInquilinosByUsuario(Integer usuario_id, Integer page, Integer linesPerPage,
+			String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		Page<Inquilino> inquilinos = inquilinoRepository.findByUsuarioId(usuario_id, pageRequest);
 		return inquilinos;
+	}
+
+	@Override
+	public Optional<Inquilino> buscar(Integer id, Integer usuario_id) {
+		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario_id);
+
+		if (inquilino == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + id + ", Tipo: " + Inquilino.class.getName());
+		}
+
+		return inquilino;
 	}
 
 }

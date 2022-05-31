@@ -42,8 +42,7 @@ public class InquilinoServiceImpl implements InquilinoService {
 	public Page<Inquilino> findAllInquilinosByUsuario(Integer usuario_id, Integer page, Integer linesPerPage,
 			String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Page<Inquilino> inquilinos = inquilinoRepository.findByUsuarioId(usuario_id, pageRequest);
-		return inquilinos;
+		return inquilinoRepository.findByUsuarioId(usuario_id, pageRequest);
 	}
 
 	@Override

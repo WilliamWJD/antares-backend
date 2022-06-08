@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.antares.dto.UsuarioCadastroDTO;
 import com.antares.dto.UsuarioDTO;
-import com.antares.services.implementations.UsuarioServiceImpl;
+import com.antares.services.impl.UsuarioServiceImpl;
 
 @Controller
 @RequestMapping(value = "/usuarios")

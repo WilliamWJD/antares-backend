@@ -1,5 +1,6 @@
-package com.antares.services.implementations;
+package com.antares.services.impl;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -12,8 +13,8 @@ import com.antares.domain.Inquilino;
 import com.antares.domain.Usuario;
 import com.antares.dto.InquilinoCadastroDto;
 import com.antares.dto.InquilinoDTO;
-import com.antares.repository.InquilinoRepository;
-import com.antares.repository.UsuarioRepository;
+import com.antares.repository.InquilinoRepositoryImpl;
+import com.antares.repository.UsuarioRepositoryImpl;
 import com.antares.services.InquilinoService;
 import com.antares.services.exceptions.ObjectNotFoundException;
 
@@ -23,8 +24,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InquilinoServiceImpl implements InquilinoService {
 
-	private final InquilinoRepository inquilinoRepository;
-	private final UsuarioRepository usuarioRepository;
+	private final InquilinoRepositoryImpl inquilinoRepository;
+	private final UsuarioRepositoryImpl usuarioRepository;
 	private final ModelMapper modelMapper;
 
 	@Override
@@ -39,22 +40,23 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public Page<Inquilino> findAllInquilinosByUsuario(Integer usuario_id, Integer page, Integer linesPerPage,
+	public Page<InquilinoDTO> findAllInquilinosByUsuario(Integer usuario_id, Integer page, Integer linesPerPage,
 			String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return inquilinoRepository.findByUsuarioId(usuario_id, pageRequest);
+		Page<Inquilino> inquilinosPageable = inquilinoRepository.findByUsuarioId(usuario_id, pageRequest);
+		return inquilinosPageable.map(i -> modelMapper.map(i, InquilinoDTO.class));
 	}
 
 	@Override
-	public Optional<Inquilino> buscar(Integer id, Integer usuario_id) {
+	public Optional<InquilinoDTO> buscar(Integer id, Integer usuario_id) {
 		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario_id);
 
-		if (inquilino == null) {
+		if (Objects.isNull(inquilino)) {
 			throw new ObjectNotFoundException(
 					"Objeto não encontrado! Id: " + id + ", Tipo: " + Inquilino.class.getName());
 		}
 
-		return inquilino;
+		return Optional.of(modelMapper.map(inquilino, InquilinoDTO.class));
 	}
 
 }

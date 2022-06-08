@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.antares.domain.Inquilino;
 import com.antares.dto.InquilinoCadastroDto;
 import com.antares.dto.InquilinoDTO;
-import com.antares.services.implementations.InquilinoServiceImpl;
+import com.antares.services.impl.InquilinoServiceImpl;
 
 @RestController
 @RequestMapping(value = "/inquilinos")
@@ -35,9 +34,8 @@ public class InquilinoResource {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> buscar(@PathVariable Integer id, @RequestHeader Integer usuario_id){
-		Optional<Inquilino> inquilino = inquilinoService.buscar(id, usuario_id);
-		return ResponseEntity.ok().body(inquilino);
+	public ResponseEntity<Optional<InquilinoDTO>> buscar(@PathVariable Integer id, @RequestHeader Integer usuario_id){
+		return ResponseEntity.ok().body(inquilinoService.buscar(id, usuario_id));
 	}
 	
 	@GetMapping(value = "/page")

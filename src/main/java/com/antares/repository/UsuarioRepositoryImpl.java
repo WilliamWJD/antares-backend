@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.antares.domain.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
+public interface UsuarioRepositoryImpl extends JpaRepository<Usuario, Integer> {
 }

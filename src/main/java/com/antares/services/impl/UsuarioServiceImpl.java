@@ -1,4 +1,4 @@
-package com.antares.services.implementations;
+package com.antares.services.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.antares.domain.Usuario;
 import com.antares.dto.UsuarioCadastroDTO;
 import com.antares.dto.UsuarioDTO;
-import com.antares.repository.UsuarioRepository;
+import com.antares.repository.UsuarioRepositoryImpl;
 import com.antares.services.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService{
 
-	private final UsuarioRepository usuarioRepository;	
+	private final UsuarioRepositoryImpl usuarioRepository;	
 	private final ModelMapper modelMapper;
 	
 	@Override

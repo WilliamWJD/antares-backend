@@ -55,7 +55,7 @@ public class InquilinoServiceImpl implements InquilinoService {
 			throw new ObjectNotFoundException(
 					"Objeto não encontrado! Id: " + id + ", Tipo: " + Inquilino.class.getName());
 		}
-
+		
 		return Optional.of(modelMapper.map(inquilino, InquilinoDTO.class));
 	}
 

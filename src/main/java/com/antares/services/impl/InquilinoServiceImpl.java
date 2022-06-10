@@ -13,8 +13,8 @@ import com.antares.domain.Inquilino;
 import com.antares.domain.Usuario;
 import com.antares.dto.InquilinoCadastroDto;
 import com.antares.dto.InquilinoDTO;
-import com.antares.repository.InquilinoRepositoryImpl;
-import com.antares.repository.UsuarioRepositoryImpl;
+import com.antares.repository.InquilinoRepository;
+import com.antares.repository.UsuarioRepository;
 import com.antares.services.InquilinoService;
 import com.antares.services.exceptions.ObjectNotFoundException;
 
@@ -24,8 +24,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class InquilinoServiceImpl implements InquilinoService {
 
-	private final InquilinoRepositoryImpl inquilinoRepository;
-	private final UsuarioRepositoryImpl usuarioRepository;
+	private final InquilinoRepository inquilinoRepository;
+	private final UsuarioRepository usuarioRepository;
 	private final ModelMapper modelMapper;
 
 	@Override

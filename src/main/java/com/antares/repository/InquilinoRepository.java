@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.antares.domain.Inquilino;
 
 @Repository
-public interface InquilinoRepositoryImpl extends JpaRepository<Inquilino, Integer> {
+public interface InquilinoRepository extends JpaRepository<Inquilino, Integer> {
 	public Page<Inquilino> findByUsuarioId(Integer usuario_id, Pageable pageRequest);
 	public Optional<Inquilino> findByIdAndUsuarioId(Integer id, Integer usuario_id);
 }

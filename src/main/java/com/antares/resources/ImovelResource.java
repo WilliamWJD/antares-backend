@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,11 @@ public class ImovelResource {
 	
 	@PostMapping
 	public ResponseEntity<Optional<ImovelDto>> save(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
+		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, user_id));
+	}
+	
+	@PutMapping
+	public ResponseEntity<Optional<ImovelDto>> update(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, user_id));
 	}
 }

@@ -28,13 +28,13 @@ public class InquilinoResource {
 	private InquilinoServiceImpl inquilinoService;
 	
 	@PostMapping
-	public ResponseEntity<InquilinoDTO> save(@Valid @RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer user_id){
+	public ResponseEntity<InquilinoDTO> save(@RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer user_id){
 		InquilinoDTO inqui = inquilinoService.save(inquilino, user_id);
 		return ResponseEntity.status(HttpStatus.CREATED).body(inqui);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Optional<InquilinoDTO>> buscar(@PathVariable Integer id, @RequestHeader Integer usuario_id){
+	public ResponseEntity<Optional<InquilinoDTO>> buscar(@Valid @PathVariable Integer id, @RequestHeader Integer usuario_id){
 		return ResponseEntity.ok().body(inquilinoService.buscar(id, usuario_id));
 	}
 	

@@ -23,9 +23,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO){
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String encoderPassword = passwordEncoder.encode(usuarioCadastroDTO.getPassword());
 		
+		String encoderPassword = passwordEncoder.encode(usuarioCadastroDTO.getPassword());
 		usuarioCadastroDTO.setPassword(encoderPassword);
+		
 		Usuario usuario = usuarioRepository.save(modelMapper.map(usuarioCadastroDTO, Usuario.class));
 		return modelMapper.map(usuario, UsuarioDTO.class);
 	}

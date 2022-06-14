@@ -2,8 +2,6 @@ package com.antares.resources;
 
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +23,12 @@ public class ImovelResource {
 	private ImovelService imovelService;
 	
 	@PostMapping
-	public ResponseEntity<Optional<ImovelDto>> save(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
+	public ResponseEntity<Optional<ImovelDto>> save(@RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, user_id));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<ImovelDto>> update(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
+	public ResponseEntity<Optional<ImovelDto>> update(@RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
 		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, user_id));
 	}
 }

@@ -1,6 +1,5 @@
 package com.antares.services.impl;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -50,10 +49,9 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public Optional<InquilinoDTO> buscar(Integer id, Integer usuario_id) {
 		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario_id);
-
-		if (Objects.isNull(inquilino)) {
-			throw new ObjectNotFoundException(
-					"Objeto não encontrado! Id: " + id + ", Tipo: " + Inquilino.class.getName());
+		
+		if(!inquilino.isPresent()) {
+			throw new ObjectNotFoundException("Inquilino não encontrado com o id: " + id + ", tipo: " + Inquilino.class.getName());
 		}
 		
 		return Optional.of(modelMapper.map(inquilino.get(), InquilinoDTO.class));

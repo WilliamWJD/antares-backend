@@ -13,32 +13,36 @@ import com.antares.dto.UsuarioDTO;
 import com.antares.repository.ImovelRepository;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.ImovelService;
+import com.antares.services.exceptions.ObjectNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ImovelServiceImpl implements ImovelService{
-	
+public class ImovelServiceImpl implements ImovelService {
+
 	@Autowired
 	private ImovelRepository imovelRepository;
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Override
 	public Optional<ImovelDto> save(ImovelDto imovelDto, Integer user_id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(user_id);
-		
-		if (usuario.isPresent()) {
-			imovelDto.setUsuario(modelMapper.map(usuario.get(), UsuarioDTO.class));
-			Imovel imovel = imovelRepository.save(modelMapper.map(imovelDto, Imovel.class));
-			return Optional.of(modelMapper.map(imovel, ImovelDto.class));
+
+		if (!usuario.isPresent()) {
+			throw new ObjectNotFoundException(
+					"Usuário não encontrado com o id: " + user_id + ", tipo: " + Usuario.class.getName());
 		}
-		return Optional.of(null);
+
+		imovelDto.setUsuario(modelMapper.map(usuario.get(), UsuarioDTO.class));
+		Imovel imovel = imovelRepository.save(modelMapper.map(imovelDto, Imovel.class));
+		return Optional.of(modelMapper.map(imovel, ImovelDto.class));
+
 	}
 
 }

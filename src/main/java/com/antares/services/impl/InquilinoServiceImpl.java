@@ -30,12 +30,14 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer user_id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(user_id);
-		if (usuario.isPresent()) {
-			inquilinoCadastroDTO.setUsuario(usuario.get());
-			Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
-			return modelMapper.map(inquilino, InquilinoDTO.class);
+
+		if (!usuario.isPresent()) {
+			throw new ObjectNotFoundException(
+					"Usuário não encontrado com o id: " + user_id + ", tipo: " + Usuario.class.getName());
 		}
-		return null;
+		inquilinoCadastroDTO.setUsuario(usuario.get());
+		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
+		return modelMapper.map(inquilino, InquilinoDTO.class);
 	}
 
 	@Override
@@ -49,11 +51,18 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public Optional<InquilinoDTO> buscar(Integer id, Integer usuario_id) {
 		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario_id);
-		
-		if(!inquilino.isPresent()) {
-			throw new ObjectNotFoundException("Inquilino não encontrado com o id: " + id + ", tipo: " + Inquilino.class.getName());
+		Optional<Usuario> usuario = usuarioRepository.findById(usuario_id);
+
+		if (!inquilino.isPresent()) {
+			throw new ObjectNotFoundException(
+					"Inquilino não encontrado com o id: " + id + ", tipo: " + Inquilino.class.getName());
 		}
-		
+
+		if (!usuario.isPresent()) {
+			throw new ObjectNotFoundException(
+					"Usuário não encontrado com o id: " + usuario_id + ", tipo: " + Usuario.class.getName());
+		}
+
 		return Optional.of(modelMapper.map(inquilino.get(), InquilinoDTO.class));
 	}
 

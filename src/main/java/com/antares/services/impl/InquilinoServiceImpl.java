@@ -3,6 +3,7 @@ package com.antares.services.impl;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -13,8 +14,8 @@ import com.antares.domain.Usuario;
 import com.antares.dto.InquilinoCadastroDto;
 import com.antares.dto.InquilinoDTO;
 import com.antares.repository.InquilinoRepository;
-import com.antares.repository.UsuarioRepository;
 import com.antares.services.InquilinoService;
+import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -22,20 +23,18 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class InquilinoServiceImpl implements InquilinoService {
-
+	
+	@Autowired UsuarioService usuarioService;
+	
 	private final InquilinoRepository inquilinoRepository;
-	private final UsuarioRepository usuarioRepository;
 	private final ModelMapper modelMapper;
 
 	@Override
 	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer user_id) {
-		Optional<Usuario> usuario = usuarioRepository.findById(user_id);
-
-		if (!usuario.isPresent()) {
-			throw new ObjectNotFoundException(
-					"Usuário não encontrado com o id: " + user_id + ", tipo: " + Usuario.class.getName());
-		}
+		Optional<Usuario> usuario = usuarioService.findUserById(user_id);
+		
 		inquilinoCadastroDTO.setUsuario(usuario.get());
+		
 		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
 		return modelMapper.map(inquilino, InquilinoDTO.class);
 	}
@@ -51,16 +50,12 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public Optional<InquilinoDTO> buscar(Integer id, Integer usuario_id) {
 		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario_id);
-		Optional<Usuario> usuario = usuarioRepository.findById(usuario_id);
+		
+		usuarioService.findUserById(usuario_id);
 
 		if (!inquilino.isPresent()) {
 			throw new ObjectNotFoundException(
 					"Inquilino não encontrado com o id: " + id + ", tipo: " + Inquilino.class.getName());
-		}
-
-		if (!usuario.isPresent()) {
-			throw new ObjectNotFoundException(
-					"Usuário não encontrado com o id: " + usuario_id + ", tipo: " + Usuario.class.getName());
 		}
 
 		return Optional.of(modelMapper.map(inquilino.get(), InquilinoDTO.class));

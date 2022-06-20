@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.antares.domain.Inquilino;
 import com.antares.domain.Usuario;
-import com.antares.dto.InquilinoCadastroDto;
-import com.antares.dto.InquilinoDTO;
+import com.antares.dto.inquilino.InquilinoCadastroDto;
+import com.antares.dto.inquilino.InquilinoDTO;
 import com.antares.repository.InquilinoRepository;
 import com.antares.services.InquilinoService;
 import com.antares.services.UsuarioService;
@@ -23,18 +23,19 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class InquilinoServiceImpl implements InquilinoService {
-	
-	@Autowired UsuarioService usuarioService;
-	
+
+	@Autowired
+	UsuarioService usuarioService;
+
 	private final InquilinoRepository inquilinoRepository;
 	private final ModelMapper modelMapper;
 
 	@Override
 	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer user_id) {
 		Optional<Usuario> usuario = usuarioService.findUserById(user_id);
-		
+
 		inquilinoCadastroDTO.setUsuario(usuario.get());
-		
+
 		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
 		return modelMapper.map(inquilino, InquilinoDTO.class);
 	}
@@ -50,7 +51,7 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public Optional<InquilinoDTO> buscar(Integer id, Integer usuario_id) {
 		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario_id);
-		
+
 		usuarioService.findUserById(usuario_id);
 
 		if (!inquilino.isPresent()) {
@@ -59,6 +60,12 @@ public class InquilinoServiceImpl implements InquilinoService {
 		}
 
 		return Optional.of(modelMapper.map(inquilino.get(), InquilinoDTO.class));
+	}
+
+	@Override
+	public void delete(Integer id, Integer usuarioId) {
+		usuarioService.findUserById(usuarioId);
+		inquilinoRepository.deleteByIdAndUsuarioId(id, usuarioId);
 	}
 
 }

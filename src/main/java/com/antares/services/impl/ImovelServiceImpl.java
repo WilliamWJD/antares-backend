@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.antares.domain.Imovel;
 import com.antares.domain.Usuario;
-import com.antares.dto.ImovelDto;
-import com.antares.dto.UsuarioDTO;
+import com.antares.dto.imovel.ImovelDto;
+import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.repository.ImovelRepository;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.ImovelService;

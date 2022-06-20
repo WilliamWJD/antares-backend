@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.antares.dto.InquilinoCadastroDto;
-import com.antares.dto.InquilinoDTO;
+import com.antares.dto.inquilino.InquilinoCadastroDto;
+import com.antares.dto.inquilino.InquilinoDTO;
 import com.antares.services.impl.InquilinoServiceImpl;
 
 @RestController
@@ -47,6 +48,12 @@ public class InquilinoResource {
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction
 	){
 		return ResponseEntity.ok().body(inquilinoService.findAllInquilinosByUsuario(usuario_id, page, linesPerPage, orderBy, direction));
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader Integer usuario_id){
+		inquilinoService.delete(id, usuario_id);
+		return ResponseEntity.ok().body(null);
 	}
 }
  

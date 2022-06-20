@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.antares.dto.UsuarioCadastroDTO;
-import com.antares.dto.UsuarioDTO;
+import com.antares.dto.usuario.UsuarioCadastroDTO;
+import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.services.impl.UsuarioServiceImpl;
 
 @Controller

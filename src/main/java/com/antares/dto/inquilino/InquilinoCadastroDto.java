@@ -1,11 +1,11 @@
-package com.antares.dto;
+package com.antares.dto.inquilino;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
+import com.antares.domain.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,12 +16,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioCadastroDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class InquilinoCadastroDto {
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String nome;
-
 	private Date dataNascimento;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
@@ -30,6 +27,7 @@ public class UsuarioCadastroDTO implements Serializable {
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String cpf;
 	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String profissao;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
@@ -37,12 +35,10 @@ public class UsuarioCadastroDTO implements Serializable {
 	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String genero;
-
+	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Email(message = "E-mail inválido")
 	private String email;
-
-	@NotEmpty(message = "Preenchimento obrigatório")
-	@Size(min = 6, max = 12)
-	private String password;
+	
+	private Usuario usuario;
 }

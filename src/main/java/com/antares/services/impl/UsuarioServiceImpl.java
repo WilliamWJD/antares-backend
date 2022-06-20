@@ -8,8 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.antares.domain.Usuario;
-import com.antares.dto.UsuarioCadastroDTO;
-import com.antares.dto.UsuarioDTO;
+import com.antares.dto.usuario.UsuarioCadastroDTO;
+import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;

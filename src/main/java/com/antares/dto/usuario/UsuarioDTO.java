@@ -1,4 +1,4 @@
-package com.antares.dto;
+package com.antares.dto.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

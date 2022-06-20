@@ -13,4 +13,5 @@ import com.antares.domain.Inquilino;
 public interface InquilinoRepository extends JpaRepository<Inquilino, Integer> {
 	public Page<Inquilino> findByUsuarioId(Integer usuario_id, Pageable pageRequest);
 	public Optional<Inquilino> findByIdAndUsuarioId(Integer id, Integer usuario_id);
+	public void deleteByIdAndUsuarioId(Integer id, Integer usuarioId);
 }

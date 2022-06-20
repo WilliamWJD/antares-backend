@@ -1,6 +1,9 @@
-package com.antares.dto;
+package com.antares.dto.inquilino;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.antares.dto.usuario.UsuarioDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,12 +16,17 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ImovelDto implements Serializable{
+public class InquilinoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String descricao;
-	private Boolean garagem;
-	private double valor;
+	private String nome;
+	private Date   dataNascimento;
+	private String rg;
+	private String cpf;
+	private String profissao;
+	private String estadoCivil;
+	private String genero;
+	private String email;
 	private UsuarioDTO usuario;
 }

@@ -34,6 +34,10 @@ public class InquilinoServiceImpl implements InquilinoService {
 	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer userId) {
 		Optional<Usuario> usuario = usuarioService.findUserById(userId);
 		
+		if(inquilinoCadastroDTO.getId() != null) {
+			buscar(inquilinoCadastroDTO.getId(), userId);
+		}
+		
 		inquilinoCadastroDTO.setUsuario(usuario.get());
 
 		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
@@ -65,6 +69,7 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public void delete(Integer id, Integer usuarioId) {
 		usuarioService.findUserById(usuarioId);
+		buscar(id, usuarioId);
 		inquilinoRepository.deleteInquilinoByIdAndUsuarioId(id, usuarioId);
 	}
 

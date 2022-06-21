@@ -18,22 +18,22 @@ import com.antares.services.InquilinoService;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class InquilinoServiceImpl implements InquilinoService {
 
 	@Autowired
 	UsuarioService usuarioService;
-
-	private final InquilinoRepository inquilinoRepository;
-	private final ModelMapper modelMapper;
+	
+	@Autowired
+	private InquilinoRepository inquilinoRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
-	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer user_id) {
-		Optional<Usuario> usuario = usuarioService.findUserById(user_id);
-
+	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer userId) {
+		Optional<Usuario> usuario = usuarioService.findUserById(userId);
+		
 		inquilinoCadastroDTO.setUsuario(usuario.get());
 
 		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
@@ -41,18 +41,18 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public Page<InquilinoDTO> findAllInquilinosByUsuario(Integer usuario_id, Integer page, Integer linesPerPage,
+	public Page<InquilinoDTO> findAllInquilinosByUsuario(Integer userId, Integer page, Integer linesPerPage,
 			String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Page<Inquilino> inquilinosPageable = inquilinoRepository.findByUsuarioId(usuario_id, pageRequest);
+		Page<Inquilino> inquilinosPageable = inquilinoRepository.findByUsuarioId(userId, pageRequest);
 		return inquilinosPageable.map(i -> modelMapper.map(i, InquilinoDTO.class));
 	}
 
 	@Override
-	public Optional<InquilinoDTO> buscar(Integer id, Integer usuario_id) {
-		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario_id);
+	public Optional<InquilinoDTO> buscar(Integer id, Integer userId) {
+		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, userId);
 
-		usuarioService.findUserById(usuario_id);
+		usuarioService.findUserById(userId);
 
 		if (!inquilino.isPresent()) {
 			throw new ObjectNotFoundException(
@@ -65,7 +65,7 @@ public class InquilinoServiceImpl implements InquilinoService {
 	@Override
 	public void delete(Integer id, Integer usuarioId) {
 		usuarioService.findUserById(usuarioId);
-		inquilinoRepository.deleteByIdAndUsuarioId(id, usuarioId);
+		inquilinoRepository.deleteInquilinoByIdAndUsuarioId(id, usuarioId);
 	}
 
 }

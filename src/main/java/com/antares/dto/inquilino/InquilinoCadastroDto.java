@@ -17,6 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InquilinoCadastroDto {
+	private Integer id;
+	
 	@NotEmpty(message = "Preenchimento obrigatório")
 	private String nome;
 	private Date dataNascimento;

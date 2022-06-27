@@ -1,5 +1,6 @@
 package com.antares.resources;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -39,5 +40,10 @@ public class ImovelResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Optional<ImovelDto>> buscar(@PathVariable Integer id, @RequestHeader Integer userId){
 		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findById(id, userId));
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<ImovelDto>> findAll(@RequestHeader Integer userId){
+		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findAll(userId));
 	}
 }

@@ -69,4 +69,10 @@ public class ImovelServiceImpl implements ImovelService {
 		return imoveis.stream().map(imovel -> modelMapper.map(imovel, ImovelDto.class)).collect(Collectors.toList());
 	}
 
+	@Override
+	public void delete(Integer id, Integer userId) {
+		usuarioService.findUserById(userId);
+		imovelRepository.deleteImovelByIdAndUsuarioId(id, userId);
+	}
+
 }

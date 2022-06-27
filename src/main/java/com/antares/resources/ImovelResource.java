@@ -25,12 +25,12 @@ public class ImovelResource {
 	private ImovelService imovelService;
 	
 	@PostMapping
-	public ResponseEntity<Optional<ImovelDto>> save(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
-		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, user_id));
+	public ResponseEntity<Optional<ImovelDto>> save(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer userId){
+		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, userId));
 	}
 	
 	@PutMapping
-	public ResponseEntity<Optional<ImovelDto>> update(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer user_id){
-		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, user_id));
+	public ResponseEntity<Optional<ImovelDto>> update(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer userId){
+		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, userId));
 	}
 }

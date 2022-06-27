@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,5 +34,10 @@ public class ImovelResource {
 	@PutMapping
 	public ResponseEntity<Optional<ImovelDto>> update(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer userId){
 		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, userId));
+	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Optional<ImovelDto>> buscar(@PathVariable Integer id, @RequestHeader Integer userId){
+		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findById(id, userId));
 	}
 }

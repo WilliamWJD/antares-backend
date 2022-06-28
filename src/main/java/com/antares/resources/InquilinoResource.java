@@ -22,19 +22,25 @@ import com.antares.dto.inquilino.InquilinoCadastroDto;
 import com.antares.dto.inquilino.InquilinoDTO;
 import com.antares.services.impl.InquilinoServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(value = "Inquilino", tags = { "Inquilino" })
 @RequestMapping(value = "/inquilinos")
 public class InquilinoResource {
 	
 	@Autowired
 	private InquilinoServiceImpl inquilinoService;
 	
+	@ApiOperation(value = "${swagger.api.operation.inquilino.value}", notes = "${swagger.api.operation.inquilino.notes}", tags = {"Inquilino" })
 	@PostMapping
 	public ResponseEntity<InquilinoDTO> save(@RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer userId){
 		InquilinoDTO inqui = inquilinoService.save(inquilino, userId);
 		return ResponseEntity.status(HttpStatus.CREATED).body(inqui);
 	}
 	
+	@ApiOperation(value = "${swagger.api.operation.inquilino.atualizar.value}", notes = "${swagger.api.operation.inquilino.atualizar.notes}", tags = {"Inquilino" })
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<InquilinoDTO> update(@PathVariable Integer id, @RequestBody InquilinoCadastroDto inquilino, @RequestHeader Integer userId){
 		inquilino.setId(id);
@@ -42,11 +48,13 @@ public class InquilinoResource {
 		return ResponseEntity.status(HttpStatus.CREATED).body(inqui);
 	}
 	
+	@ApiOperation(value = "${swagger.api.operation.inquilino.busca.value}", notes = "${swagger.api.operation.inquilino.busca.notes}", tags = {"Inquilino" })
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Optional<InquilinoDTO>> buscar(@Valid @PathVariable Integer id, @RequestHeader Integer userId){
 		return ResponseEntity.ok().body(inquilinoService.buscar(id, userId));
 	}
 	
+	@ApiOperation(value = "${swagger.api.operation.inquilino.busca.todos.value}", notes = "${swagger.api.operation.inquilino.busca.todos.notes}", tags = {"Inquilino" })
 	@GetMapping(value = "/page")
 	public ResponseEntity<?> findAllInquilinosByUser(
 			@RequestHeader Integer userId, 
@@ -58,6 +66,7 @@ public class InquilinoResource {
 		return ResponseEntity.ok().body(inquilinoService.findAllInquilinosByUsuario(userId, page, linesPerPage, orderBy, direction));
 	}
 	
+	@ApiOperation(value = "${swagger.api.operation.inquilino.delete.value}", notes = "${swagger.api.operation.inquilino.delete.notes}", tags = {"Inquilino" })
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader Integer userId){
 		inquilinoService.delete(id, userId);

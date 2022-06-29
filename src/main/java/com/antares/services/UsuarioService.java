@@ -7,7 +7,7 @@ import com.antares.dto.usuario.UsuarioCadastroDTO;
 import com.antares.dto.usuario.UsuarioDTO;
 
 public interface UsuarioService {
-	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO);
-	public UsuarioDTO update(Integer id, UsuarioCadastroDTO usuarioCadastroDTO);
-	public Optional<Usuario> findUserById(Integer id);
+	UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO);
+	UsuarioDTO update(Integer id, UsuarioCadastroDTO usuarioCadastroDTO);
+	Optional<Usuario> findUserById(Integer id);
 }

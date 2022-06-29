@@ -13,7 +13,6 @@ import com.antares.domain.Usuario;
 import com.antares.dto.imovel.ImovelDto;
 import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.repository.ImovelRepository;
-import com.antares.repository.UsuarioRepository;
 import com.antares.services.ImovelService;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;

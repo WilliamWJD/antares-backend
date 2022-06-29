@@ -49,4 +49,8 @@ public class Usuario implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Imovel> imoveis = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	private List<Locacao> locacao = new ArrayList<>();
 }

@@ -8,8 +8,8 @@ import com.antares.dto.inquilino.InquilinoCadastroDto;
 import com.antares.dto.inquilino.InquilinoDTO;
 
 public interface InquilinoService {
-	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer userId);
-	public Page<InquilinoDTO> findAllInquilinosByUsuario(Integer userId, Integer page, Integer linesPerPage, String orderBy, String direction);
-	public Optional<InquilinoDTO> buscar(Integer id, Integer userId);
-	public void delete(Integer id, Integer usuarioId);
+	InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer userId);
+	Page<InquilinoDTO> findAllInquilinosByUsuario(Integer userId, Integer page, Integer linesPerPage, String orderBy, String direction);
+	Optional<InquilinoDTO> buscar(Integer id, Integer userId);
+	void delete(Integer id, Integer usuarioId);
 }

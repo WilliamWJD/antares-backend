@@ -3,7 +3,6 @@ package com.antares.services.impl;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,8 @@ import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.dto.usuario.UsuarioUpdateDTO;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.UsuarioService;
-
+import com.antares.services.exceptions.DataIntegrityViolationException;
 import com.antares.services.exceptions.ObjectNotFoundException;
-import com.antares.services.exceptions.ValidationException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,29 +35,33 @@ public class UsuarioServiceImpl implements UsuarioService {
 			Usuario usuario = usuarioRepository.save(modelMapper.map(usuarioCadastroDTO, Usuario.class));
 			return modelMapper.map(usuario, UsuarioDTO.class);
 		}catch (Exception e) {
-			throw new ValidationException("Atributos em duplicidade");
+			throw new DataIntegrityViolationException("Ocorreu um erro ao salvar usuário.", e.getCause());
 		}
 	}
 
 	@Override
 	public UsuarioDTO update(Integer id, UsuarioUpdateDTO usuarioUpdateDTO) {
-		Optional<Usuario> user = findUserById(id);
+		try {
+			Optional<Usuario> user = findUserById(id);
 
-		if (user.isPresent()) {
-			user.get().setNome(usuarioUpdateDTO.getNome());
-			user.get().setDataNascimento(usuarioUpdateDTO.getDataNascimento());
-			user.get().setDataNascimento(usuarioUpdateDTO.getDataNascimento());
-			user.get().setRg(usuarioUpdateDTO.getRg());
-			user.get().setCpf(usuarioUpdateDTO.getCpf());
-			user.get().setProfissao(usuarioUpdateDTO.getProfissao());
-			user.get().setEstadoCivil(usuarioUpdateDTO.getEstadoCivil());
-			user.get().setGenero(usuarioUpdateDTO.getGenero());
-			user.get().setEmail(usuarioUpdateDTO.getEmail());
+			if (user.isPresent()) {
+				user.get().setNome(usuarioUpdateDTO.getNome());
+				user.get().setDataNascimento(usuarioUpdateDTO.getDataNascimento());
+				user.get().setDataNascimento(usuarioUpdateDTO.getDataNascimento());
+				user.get().setRg(usuarioUpdateDTO.getRg());
+				user.get().setCpf(usuarioUpdateDTO.getCpf());
+				user.get().setProfissao(usuarioUpdateDTO.getProfissao());
+				user.get().setEstadoCivil(usuarioUpdateDTO.getEstadoCivil());
+				user.get().setGenero(usuarioUpdateDTO.getGenero());
+				user.get().setEmail(usuarioUpdateDTO.getEmail());
+			}
+
+			Usuario usuario = usuarioRepository.save(user.get());
+
+			return modelMapper.map(usuario, UsuarioDTO.class);
+		} catch (Exception e) {
+			throw new DataIntegrityViolationException("Ocorreu um erro ao atualizar esse usuário.", e.getCause());
 		}
-
-		Usuario usuario = usuarioRepository.save(user.get());
-
-		return modelMapper.map(usuario, UsuarioDTO.class);
 	}
 
 	@Override

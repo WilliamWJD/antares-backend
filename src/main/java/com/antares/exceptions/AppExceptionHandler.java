@@ -16,19 +16,19 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<ErrorMessage> objectNotFoundException(ObjectNotFoundException e, HttpServletRequest request){
-		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis(), e.getCause().toString());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 	
 	@ExceptionHandler(ValidationException.class)
 	public ResponseEntity<ErrorMessage> validationException(Exception e, HttpServletRequest request){
-		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis(), e.getCause().toString());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<ErrorMessage> dataIntegrityViolationException(Exception e, HttpServletRequest request){
-		ErrorMessage err = new ErrorMessage(HttpStatus.CONFLICT.value(), e.getMessage(), System.currentTimeMillis());
+		ErrorMessage err = new ErrorMessage(HttpStatus.CONFLICT.value(), e.getMessage(), System.currentTimeMillis(), e.getCause().toString());
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(err);
 	}
 }

@@ -10,4 +10,6 @@ import com.antares.domain.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	Optional<Usuario> findByEmail(String email);
+	Optional<Usuario> findByRg(String rg);
+	Optional<Usuario> findByCpf(String cpf);
 }

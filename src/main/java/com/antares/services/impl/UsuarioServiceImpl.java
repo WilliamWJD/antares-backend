@@ -3,6 +3,7 @@ package com.antares.services.impl;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.dto.usuario.UsuarioUpdateDTO;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.UsuarioService;
+
 import com.antares.services.exceptions.ObjectNotFoundException;
 import com.antares.services.exceptions.ValidationException;
 
@@ -20,33 +22,30 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
-	private final UsuarioRepository usuarioRepository;	
+	private final UsuarioRepository usuarioRepository;
 	private final ModelMapper modelMapper;
-	
+
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	
+
 	@Override
-	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO){
-		
-		// verifica se existe um usuário cadastrado no base com o email passado no Dto
-		if(usuarioRepository.findByEmail(usuarioCadastroDTO.getEmail()).isPresent()) {
-			throw new ValidationException("Usuário já cadastrado com o e-mail informado.");
+	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO) {
+		try {
+			String encoderPassword = passwordEncoder.encode(usuarioCadastroDTO.getPassword());
+			usuarioCadastroDTO.setPassword(encoderPassword);
+			Usuario usuario = usuarioRepository.save(modelMapper.map(usuarioCadastroDTO, Usuario.class));
+			return modelMapper.map(usuario, UsuarioDTO.class);
+		}catch (Exception e) {
+			throw new ValidationException("Atributos em duplicidade");
 		}
-		
-		String encoderPassword = passwordEncoder.encode(usuarioCadastroDTO.getPassword());
-		usuarioCadastroDTO.setPassword(encoderPassword);
-		
-		Usuario usuario = usuarioRepository.save(modelMapper.map(usuarioCadastroDTO, Usuario.class));
-		return modelMapper.map(usuario, UsuarioDTO.class);
 	}
 
 	@Override
 	public UsuarioDTO update(Integer id, UsuarioUpdateDTO usuarioUpdateDTO) {
 		Optional<Usuario> user = findUserById(id);
-		
-		if(user.isPresent()) {
+
+		if (user.isPresent()) {
 			user.get().setNome(usuarioUpdateDTO.getNome());
 			user.get().setDataNascimento(usuarioUpdateDTO.getDataNascimento());
 			user.get().setDataNascimento(usuarioUpdateDTO.getDataNascimento());
@@ -57,16 +56,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 			user.get().setGenero(usuarioUpdateDTO.getGenero());
 			user.get().setEmail(usuarioUpdateDTO.getEmail());
 		}
-		
+
 		Usuario usuario = usuarioRepository.save(user.get());
-		
+
 		return modelMapper.map(usuario, UsuarioDTO.class);
 	}
 
 	@Override
-	public Optional<Usuario> findUserById(Integer id) {		
+	public Optional<Usuario> findUserById(Integer id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
-		if(!usuario.isPresent()) {
+		if (!usuario.isPresent()) {
 			throw new ObjectNotFoundException(
 					"Usuário não encontrado com o id: " + id + ", tipo: " + Usuario.class.getName());
 		}

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.antares.services.exceptions.ObjectNotFoundException;
+import com.antares.services.exceptions.ValidationException;
 
 @ControllerAdvice
 public class AppExceptionHandler extends ResponseEntityExceptionHandler{
@@ -18,7 +19,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler{
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 	
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(ValidationException.class)
 	public ResponseEntity<ErrorMessage> validationException(Exception e, HttpServletRequest request){
 		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);

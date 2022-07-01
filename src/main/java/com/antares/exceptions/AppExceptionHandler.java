@@ -17,4 +17,10 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler{
 		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorMessage> validationException(Exception e, HttpServletRequest request){
+		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
 }

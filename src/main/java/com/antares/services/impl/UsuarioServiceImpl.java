@@ -14,6 +14,7 @@ import com.antares.dto.usuario.UsuarioUpdateDTO;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;
+import com.antares.services.exceptions.ValidationException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO){
+		// verifica se existe um usuário cadastrado no base com o email passado no Dto
+		Optional<Usuario> checkUserByEmail = findByEmail(usuarioCadastroDTO.getEmail());
+		
+		if(checkUserByEmail.isPresent()) {
+			throw new ValidationException("Usuário já cadastrado com o e-mail informado.");
+		}
+		
 		String encoderPassword = passwordEncoder.encode(usuarioCadastroDTO.getPassword());
 		usuarioCadastroDTO.setPassword(encoderPassword);
 		
@@ -64,5 +72,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 					"Usuário não encontrado com o id: " + id + ", tipo: " + Usuario.class.getName());
 		}
 		return usuario;
+	}
+	
+	private Optional<Usuario> findByEmail(String email){
+		return usuarioRepository.findByEmail(email);
 	}
 }

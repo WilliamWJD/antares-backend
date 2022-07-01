@@ -16,7 +16,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<ErrorMessage> objectNotFoundException(ObjectNotFoundException e, HttpServletRequest request){
-		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis(), e.getCause().toString());
+		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 	

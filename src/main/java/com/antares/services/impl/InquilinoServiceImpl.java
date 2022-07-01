@@ -75,10 +75,16 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public void delete(Integer id, Integer usuarioId) {
-		usuarioService.findUserById(usuarioId);
-		buscar(id, usuarioId);
-		inquilinoRepository.deleteByIdAndUsuarioId(id, usuarioId);
+	public void delete(Integer id, Integer userId) {
+		usuarioService.findUserById(userId);
+		
+		Optional<InquilinoDTO> inquilino = buscar(id, userId);
+		
+		if(!inquilino.isPresent()) {
+			throw new ObjectNotFoundException("Inquilino não encontrado com o id: " + id + ", tipo: " + Inquilino.class.getName());
+		}
+		
+		inquilinoRepository.delete(modelMapper.map(inquilino.get(), Inquilino.class));
 	}
 
 }

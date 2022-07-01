@@ -14,4 +14,10 @@ public class ErrorMessage {
 	private String message;
 	private Long timeStamp;
 	private String error;
+	
+	public ErrorMessage(Integer status, String message, Long timeStamp) {
+		this.status = status;
+		this.message = message;
+		this.timeStamp = timeStamp;
+	}
 }

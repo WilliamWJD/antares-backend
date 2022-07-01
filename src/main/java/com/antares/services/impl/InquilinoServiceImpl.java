@@ -16,6 +16,8 @@ import com.antares.dto.inquilino.InquilinoDTO;
 import com.antares.repository.InquilinoRepository;
 import com.antares.services.InquilinoService;
 import com.antares.services.UsuarioService;
+
+import com.antares.services.exceptions.DataIntegrityViolationException;
 import com.antares.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,18 +34,22 @@ public class InquilinoServiceImpl implements InquilinoService {
 
 	@Override
 	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer userId) {
-		Optional<Usuario> usuario = usuarioService.findUserById(userId);
+		try {
+			Optional<Usuario> usuario = usuarioService.findUserById(userId);
 
-		if (inquilinoCadastroDTO.getId() != null) {
-			buscar(inquilinoCadastroDTO.getId(), userId);
+			if (inquilinoCadastroDTO.getId() != null) {
+				buscar(inquilinoCadastroDTO.getId(), userId);
+			}
+
+			if(usuario.isPresent()) {
+				inquilinoCadastroDTO.setUsuario(usuario.get());
+			}
+
+			Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
+			return modelMapper.map(inquilino, InquilinoDTO.class);
+		} catch (Exception e) {
+			throw new DataIntegrityViolationException("Ocorreu um erro ao salvar esse inquilino.", e.getCause());
 		}
-
-		if(usuario.isPresent()) {
-			inquilinoCadastroDTO.setUsuario(usuario.get());
-		}
-
-		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
-		return modelMapper.map(inquilino, InquilinoDTO.class);
 	}
 
 	@Override

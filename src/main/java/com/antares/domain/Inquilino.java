@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +35,9 @@ public class Inquilino implements Serializable {
 	private Integer id;
 	private String nome;
 	private Date dataNascimento;
+	@Column(unique = true)
 	private String rg;
+	@Column(unique = true)
 	private String cpf;
 	private String profissao;
 	private String estadoCivil;

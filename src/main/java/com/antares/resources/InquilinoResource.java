@@ -68,9 +68,9 @@ public class InquilinoResource {
 	
 	@ApiOperation(value = "${swagger.api.operation.inquilino.delete.value}", notes = "${swagger.api.operation.inquilino.delete.notes}", tags = {"Inquilino" })
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader Integer userId){
+	public ResponseEntity<?> delete(@PathVariable Integer id, @RequestHeader Integer userId){
 		inquilinoService.delete(id, userId);
-		return ResponseEntity.ok().body(null);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 }
  

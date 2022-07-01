@@ -23,21 +23,21 @@ public class InquilinoServiceImpl implements InquilinoService {
 
 	@Autowired
 	UsuarioService usuarioService;
-	
+
 	@Autowired
 	private InquilinoRepository inquilinoRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
 	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer userId) {
 		Optional<Usuario> usuario = usuarioService.findUserById(userId);
-		
-		if(inquilinoCadastroDTO.getId() != null) {
+
+		if (inquilinoCadastroDTO.getId() != null) {
 			buscar(inquilinoCadastroDTO.getId(), userId);
 		}
-		
+
 		inquilinoCadastroDTO.setUsuario(usuario.get());
 
 		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
@@ -70,7 +70,7 @@ public class InquilinoServiceImpl implements InquilinoService {
 	public void delete(Integer id, Integer usuarioId) {
 		usuarioService.findUserById(usuarioId);
 		buscar(id, usuarioId);
-		inquilinoRepository.deleteInquilinoByIdAndUsuarioId(id, usuarioId);
+		inquilinoRepository.deleteByIdAndUsuarioId(id, usuarioId);
 	}
 
 }

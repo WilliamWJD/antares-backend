@@ -1,10 +1,12 @@
 package com.antares.resources;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,7 +58,7 @@ public class InquilinoResource {
 	
 	@ApiOperation(value = "${swagger.api.operation.inquilino.busca.todos.value}", notes = "${swagger.api.operation.inquilino.busca.todos.notes}", tags = {"Inquilino" })
 	@GetMapping(value = "/page")
-	public ResponseEntity<?> findAllInquilinosByUser(
+	public ResponseEntity<Page<InquilinoDTO>> findAllInquilinosByUser(
 			@RequestHeader Integer userId, 
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 

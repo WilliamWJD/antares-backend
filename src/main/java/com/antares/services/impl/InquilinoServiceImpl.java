@@ -38,7 +38,9 @@ public class InquilinoServiceImpl implements InquilinoService {
 			buscar(inquilinoCadastroDTO.getId(), userId);
 		}
 
-		inquilinoCadastroDTO.setUsuario(usuario.get());
+		if(usuario.isPresent()) {
+			inquilinoCadastroDTO.setUsuario(usuario.get());
+		}
 
 		Inquilino inquilino = inquilinoRepository.save(modelMapper.map(inquilinoCadastroDTO, Inquilino.class));
 		return modelMapper.map(inquilino, InquilinoDTO.class);

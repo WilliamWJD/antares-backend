@@ -29,10 +29,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO){
-		// verifica se existe um usuário cadastrado no base com o email passado no Dto
-		Optional<Usuario> checkUserByEmail = findByEmail(usuarioCadastroDTO.getEmail());
 		
-		if(checkUserByEmail.isPresent()) {
+		// verifica se existe um usuário cadastrado no base com o email passado no Dto
+		if(usuarioRepository.findByEmail(usuarioCadastroDTO.getEmail()).isPresent()) {
 			throw new ValidationException("Usuário já cadastrado com o e-mail informado.");
 		}
 		
@@ -72,9 +71,5 @@ public class UsuarioServiceImpl implements UsuarioService{
 					"Usuário não encontrado com o id: " + id + ", tipo: " + Usuario.class.getName());
 		}
 		return usuario;
-	}
-	
-	private Optional<Usuario> findByEmail(String email){
-		return usuarioRepository.findByEmail(email);
 	}
 }

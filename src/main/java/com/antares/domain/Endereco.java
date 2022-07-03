@@ -35,4 +35,7 @@ public class Endereco implements Serializable{
 	
 	@OneToOne(mappedBy = "endereco")
 	private Usuario usuario;
+	
+	@OneToOne(mappedBy = "endereco")
+	private Imovel imovel;
 }

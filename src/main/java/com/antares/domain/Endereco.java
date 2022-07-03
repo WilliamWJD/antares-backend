@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,4 +32,7 @@ public class Endereco implements Serializable{
 	private String cep;
 	private String logradouro;
 	private Integer numero;
+	
+	@OneToOne(mappedBy = "endereco")
+	private Usuario usuario;
 }

@@ -15,7 +15,6 @@ import com.antares.dto.usuario.UsuarioCadastroDTO;
 import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.dto.usuario.UsuarioUpdateDTO;
 import com.antares.repository.UsuarioRepository;
-import com.antares.services.EnderecoService;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.DataIntegrityViolationException;
 import com.antares.services.exceptions.ObjectNotFoundException;
@@ -29,9 +28,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	@Autowired
-	private EnderecoService enderecoService;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -43,9 +39,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			String encoderPassword = passwordEncoder.encode(usuarioCadastroDTO.getPassword());
 			usuarioCadastroDTO.setPassword(encoderPassword);
 			Usuario usuario = usuarioRepository.save(modelMapper.map(usuarioCadastroDTO, Usuario.class));
-			
-			usuarioCadastroDTO.getEnderecos().stream().forEach(item -> item.setUsuario(usuario));
-			enderecoService.salvar(usuarioCadastroDTO.getEnderecos());
 			
 			logger.info("** Cadastro de Usuario - Finalizando o cadastro de usuário");
 			return modelMapper.map(usuario, UsuarioDTO.class);

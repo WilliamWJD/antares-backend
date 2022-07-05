@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Date dataNascimento;
@@ -49,18 +49,18 @@ public class Usuario implements Serializable {
 	private String password;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario")
 	private List<Inquilino> inquilinos = new ArrayList<>();
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario")
 	private List<Imovel> imoveis = new ArrayList<>();
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "usuario")
 	private List<Locacao> locacao = new ArrayList<>();
 	
-	@OneToOne
-	@JoinColumn(name = "endereco_id")
-	private Endereco endereco;
+	@JsonIgnore
+	@OneToMany(mappedBy = "usuario")
+	private List<Endereco> enderecos = new ArrayList<>();
 }

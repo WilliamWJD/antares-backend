@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,19 +15,23 @@ import com.antares.dto.usuario.UsuarioCadastroDTO;
 import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.dto.usuario.UsuarioUpdateDTO;
 import com.antares.repository.UsuarioRepository;
+import com.antares.services.EnderecoService;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.DataIntegrityViolationException;
 import com.antares.services.exceptions.ObjectNotFoundException;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 	private static final Logger logger = LoggerFactory.getLogger(UsuarioServiceImpl.class);
 	
-	private final UsuarioRepository usuarioRepository;
-	private final ModelMapper modelMapper;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	@Autowired
+	private EnderecoService enderecoService;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -38,6 +43,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 			String encoderPassword = passwordEncoder.encode(usuarioCadastroDTO.getPassword());
 			usuarioCadastroDTO.setPassword(encoderPassword);
 			Usuario usuario = usuarioRepository.save(modelMapper.map(usuarioCadastroDTO, Usuario.class));
+			
+			usuarioCadastroDTO.getEnderecos().stream().forEach(item -> item.setUsuario(usuario));
+			enderecoService.salvar(usuarioCadastroDTO.getEnderecos());
 			
 			logger.info("** Cadastro de Usuario - Finalizando o cadastro de usuário");
 			return modelMapper.map(usuario, UsuarioDTO.class);

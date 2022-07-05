@@ -32,21 +32,21 @@ public class Imovel implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String descricao;
 	private Boolean garagem;
 	private double valor;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "imovel", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "imovel")
 	@JsonIgnore
 	private List<Locacao> locacoes = new ArrayList<>();
 	
-	@OneToOne
-	@JoinColumn(name = "endereco_id")
-	private Endereco endereco;
+//	@OneToOne
+//	@JoinColumn(name = "endereco_id")
+//	private Endereco endereco;
 }

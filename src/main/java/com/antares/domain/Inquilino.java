@@ -31,7 +31,7 @@ public class Inquilino implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Date dataNascimento;
@@ -48,6 +48,6 @@ public class Inquilino implements Serializable {
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "inquilino", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "inquilino", cascade = CascadeType.REMOVE)
 	private List<Locacao> locacoes = new ArrayList<>();
 }

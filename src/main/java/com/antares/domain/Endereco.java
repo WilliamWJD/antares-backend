@@ -35,7 +35,7 @@ public class Endereco implements Serializable{
 	private String logradouro;
 	private Integer numero;
 	
-	@ManyToOne(cascade =  CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
 	

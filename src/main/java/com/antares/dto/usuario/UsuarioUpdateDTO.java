@@ -1,11 +1,16 @@
 package com.antares.dto.usuario;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.antares.dto.endereco.EnderecoDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,4 +49,10 @@ public class UsuarioUpdateDTO implements Serializable {
 	@NotEmpty(message = "Preenchimento obrigatório")
 	@Email(message = "E-mail inválido")
 	private String email;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Size(min = 6, max = 12)
+	private String password;
+	
+	private List<EnderecoDTO> enderecos = new ArrayList<>();
 }

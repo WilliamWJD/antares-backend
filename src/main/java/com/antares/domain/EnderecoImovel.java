@@ -2,13 +2,12 @@ package com.antares.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +21,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class Endereco implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class EnderecoImovel implements Serializable{
+private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +34,7 @@ public class Endereco implements Serializable{
 	private String logradouro;
 	private Integer numero;
 	
-	@ManyToOne
-	@JoinColumn(name = "usuario_id")
-	private Usuario usuario;
-	
-//	@OneToOne(mappedBy = "endereco")
-//	private Imovel imovel;
+	@OneToOne
+	@JoinColumn(name = "imovel_id")
+	private Imovel imovel;
 }

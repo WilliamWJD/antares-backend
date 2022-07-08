@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.antares.domain.Endereco;
+import com.antares.domain.EnderecoUsuario;
 import com.antares.domain.Usuario;
 import com.antares.dto.endereco.EnderecoDTO;
 import com.antares.repository.EnderecoRepository;
@@ -25,7 +25,7 @@ public class EnderecoServiceImpl implements EnderecoService{
 	@Override
 	public List<EnderecoDTO> salvar(List<EnderecoDTO> enderecos, Usuario usuario) {
 		enderecos.stream().forEach(item -> item.setUsuario(usuario));
-		List<Endereco> ederecosList = enderecoRepository.saveAll(enderecos.stream().map(item -> modelMapper.map(item, Endereco.class)).collect(Collectors.toList()));
+		List<EnderecoUsuario> ederecosList = enderecoRepository.saveAll(enderecos.stream().map(item -> modelMapper.map(item, EnderecoUsuario.class)).collect(Collectors.toList()));
 		return ederecosList.stream().map(item -> modelMapper.map(item, EnderecoDTO.class)).collect(Collectors.toList());
 	}
 

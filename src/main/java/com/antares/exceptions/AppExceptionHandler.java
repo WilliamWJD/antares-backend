@@ -22,7 +22,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(ValidationException.class)
 	public ResponseEntity<ErrorMessage> validationException(Exception e, HttpServletRequest request){
-		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis(), e.getCause().toString());
+		ErrorMessage err = new ErrorMessage(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
 	

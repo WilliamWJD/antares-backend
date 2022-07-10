@@ -1,6 +1,8 @@
-package com.antares.dto.usuario;
+package com.antares.dto.endereco;
 
 import java.io.Serializable;
+
+import com.antares.domain.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +15,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UsuarioDTO implements Serializable {
+public class EnderecoUsuarioDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String nome;
-	private String email;
+	private String estado;
+	private String cidade;
+	private String bairro;
+	private String cep;
+	private String logradouro;
+	private Integer numero;
+	private Usuario usuario;
 }

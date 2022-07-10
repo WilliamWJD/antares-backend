@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +33,6 @@ private static final long serialVersionUID = 1L;
 	private String logradouro;
 	private Integer numero;
 	
-	@OneToOne
-	@JoinColumn(name = "imovel_id")
+	@OneToOne(mappedBy = "enderecoImovel")
 	private Imovel imovel;
 }

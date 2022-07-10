@@ -1,5 +1,6 @@
 package com.antares.dto.inquilino;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.Email;
@@ -11,12 +12,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class InquilinoCadastroDto {
+@ToString
+public class InquilinoCadastroDto implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	
 	@NotEmpty(message = "Preenchimento obrigatório")

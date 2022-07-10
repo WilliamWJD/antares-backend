@@ -2,6 +2,7 @@ package com.antares.dto.imovel;
 
 import java.io.Serializable;
 
+import com.antares.dto.endereco.EnderecoImovelDTO;
 import com.antares.dto.usuario.UsuarioDTO;
 
 import lombok.AllArgsConstructor;
@@ -23,4 +24,5 @@ public class ImovelDto implements Serializable{
 	private Boolean garagem;
 	private double valor;
 	private UsuarioDTO usuario;
+	private EnderecoImovelDTO enderecoImovel;
 }

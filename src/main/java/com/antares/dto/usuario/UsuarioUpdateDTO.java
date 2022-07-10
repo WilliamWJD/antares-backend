@@ -10,17 +10,19 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.antares.dto.endereco.EnderecoDTO;
+import com.antares.dto.endereco.EnderecoUsuarioDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UsuarioUpdateDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -54,5 +56,5 @@ public class UsuarioUpdateDTO implements Serializable {
 	@Size(min = 6, max = 12)
 	private String password;
 	
-	private List<EnderecoDTO> enderecos = new ArrayList<>();
+	private List<EnderecoUsuarioDTO> enderecos = new ArrayList<>();
 }

@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.antares.domain.Imovel;
 import com.antares.domain.Usuario;
+import com.antares.dto.endereco.EnderecoImovelDTO;
 import com.antares.dto.imovel.ImovelDto;
 import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.repository.ImovelRepository;
+import com.antares.services.EnderecoImovelService;
 import com.antares.services.ImovelService;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;
@@ -31,19 +33,33 @@ public class ImovelServiceImpl implements ImovelService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private EnderecoImovelService enderecoImovelService;
 
 	@Override
 	public Optional<ImovelDto> save(ImovelDto imovelDto, Integer userId) {
+		// verifica se o usuário da requisição existe
 		Optional<Usuario> usuario = usuarioService.findUserById(userId);
 		
 		if(!usuario.isPresent()) {
 			 throw new ObjectNotFoundException("Não foi possível encontrar um imóvel com id: "+imovelDto.getId()+" Tipo: "+Imovel.class.getName());
 		}
 		
+		// salva o endereço imovel
+		EnderecoImovelDTO endereco = enderecoImovelService.salvar(imovelDto.getEnderecoImovel());
+		
+		// seta usuario e endereco no Dto
 		imovelDto.setUsuario(modelMapper.map(usuario.get(), UsuarioDTO.class));
+		imovelDto.setEnderecoImovel(endereco);
+		
+		// salva imovel
 		Imovel imovel = imovelRepository.save(modelMapper.map(imovelDto, Imovel.class));
-		return Optional.of(modelMapper.map(imovel, ImovelDto.class));
-
+				
+		// monta o retorno json imovel
+		ImovelDto imovelResponse = modelMapper.map(imovel, ImovelDto.class);
+		
+		return Optional.of(imovelResponse);
 	}
 
 	@Override

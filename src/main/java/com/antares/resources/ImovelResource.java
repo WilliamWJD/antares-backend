@@ -47,13 +47,13 @@ public class ImovelResource {
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.buscar.value}", notes = "${swagger.api.operation.imovel.buscar.notes}", tags = {"Imóvel" })
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Optional<ImovelDto>> buscar(@PathVariable Integer id, @RequestHeader Integer userId){
+	public ResponseEntity<Optional<ImovelResponseDto>> buscar(@PathVariable Integer id, @RequestHeader Integer userId){
 		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findById(id, userId));
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.buscar.todos.value}", notes = "${swagger.api.operation.imovel.buscar.todos.notes}", tags = {"Imóvel" })
 	@GetMapping
-	public ResponseEntity<List<ImovelDto>> findAll(@RequestHeader Integer userId){
+	public ResponseEntity<List<ImovelResponseDto>> findAll(@RequestHeader Integer userId){
 		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findAll(userId));
 	}
 	

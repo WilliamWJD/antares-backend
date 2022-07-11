@@ -8,7 +8,7 @@ import com.antares.dto.imovel.ImovelResponseDto;
 
 public interface ImovelService {
 	ImovelResponseDto save(ImovelDto imovelDto, Integer userId);
-	Optional<ImovelDto> findById(Integer id, Integer userId);
-	List<ImovelDto> findAll(Integer userId);
+	Optional<ImovelResponseDto> findById(Integer id, Integer userId);
+	List<ImovelResponseDto> findAll(Integer userId);
 	void delete(Integer id, Integer userId);
 }

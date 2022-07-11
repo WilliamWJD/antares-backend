@@ -52,20 +52,20 @@ public class ImovelServiceImpl implements ImovelService {
 	}
 
 	@Override
-	public Optional<ImovelDto> findById(Integer id, Integer userId) {
+	public Optional<ImovelResponseDto> findById(Integer id, Integer userId) {
 		usuarioService.findUserById(userId);
 		Optional<Imovel> imovel = imovelRepository.findByIdAndUsuarioId(id, userId);
 		if(!imovel.isPresent()) {
 			 throw new ObjectNotFoundException("Não foi possível encontrar um imóvel com id: "+id+" Tipo: "+Imovel.class.getName());
 		}
-		return Optional.of(modelMapper.map(imovel.get(), ImovelDto.class));
+		return Optional.of(modelMapper.map(imovel.get(), ImovelResponseDto.class));
 	}
 
 	@Override
-	public List<ImovelDto> findAll(Integer userId) {
+	public List<ImovelResponseDto> findAll(Integer userId) {
 		usuarioService.findUserById(userId);
 		List<Imovel> imoveis = imovelRepository.findAllByUsuarioId(userId);
-		return imoveis.stream().map(imovel -> modelMapper.map(imovel, ImovelDto.class)).collect(Collectors.toList());
+		return imoveis.stream().map(imovel -> modelMapper.map(imovel, ImovelResponseDto.class)).collect(Collectors.toList());
 	}
 
 	@Override

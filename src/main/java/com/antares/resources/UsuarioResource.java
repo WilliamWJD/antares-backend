@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.antares.dto.usuario.UsuarioCadastroDTO;
 import com.antares.dto.usuario.UsuarioDTO;
+import com.antares.dto.usuario.UsuarioResponseDTO;
 import com.antares.dto.usuario.UsuarioUpdateDTO;
 import com.antares.services.impl.UsuarioServiceImpl;
 
@@ -27,15 +27,15 @@ public class UsuarioResource {
 
 	@ApiOperation(value = "${swagger.api.operation.usuario.value}", notes = "${swagger.api.operation.usuario.notes}", tags = {"Usuário"})
 	@PostMapping
-	public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioCadastroDTO usuario) {
-		UsuarioDTO obj = usuarioService.save(usuario);
+	public ResponseEntity<UsuarioResponseDTO> save(@RequestBody UsuarioDTO usuario) {
+		UsuarioResponseDTO obj = usuarioService.save(usuario);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.usuario.update.value}", notes = "${swagger.api.operation.usuario.update.notes}", tags = {"Usuário"})
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UsuarioDTO> update(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO, @PathVariable Integer id){
-		UsuarioDTO update = usuarioService.update(id, usuarioUpdateDTO);
+	public ResponseEntity<UsuarioResponseDTO> update(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO, @PathVariable Integer id){
+		UsuarioResponseDTO update = usuarioService.update(id, usuarioUpdateDTO);
 		return ResponseEntity.ok().body(update);
 	}
 }

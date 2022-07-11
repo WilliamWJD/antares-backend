@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.antares.domain.Usuario;
-import com.antares.dto.usuario.UsuarioCadastroDTO;
 import com.antares.dto.usuario.UsuarioDTO;
+import com.antares.dto.usuario.UsuarioResponseDTO;
 import com.antares.dto.usuario.UsuarioUpdateDTO;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.EnderecoUsuarioService;
@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@Override
-	public UsuarioDTO save(UsuarioCadastroDTO usuarioCadastroDTO) {
+	public UsuarioResponseDTO save(UsuarioDTO usuarioCadastroDTO) {
 		try {
 			logger.info("** Cadastro de Usuario - Iniciando o cadastro de usuário");
 			
@@ -48,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			enderecoService.salvar(usuarioCadastroDTO.getEnderecos(), usuario);
 			
 			logger.info("** Cadastro de Usuario - Finalizando o cadastro de usuário");
-			return modelMapper.map(usuario, UsuarioDTO.class);
+			return modelMapper.map(usuario, UsuarioResponseDTO.class);
 		}catch (Exception e) {
 			logger.info("** Cadastro de Usuario - Ocorreu um erro ao salvar o usuário {}", usuarioCadastroDTO);
 			throw new DataIntegrityViolationException("Ocorreu um erro ao salvar usuário.", e.getCause());
@@ -56,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 
 	@Override
-	public UsuarioDTO update(Integer id, UsuarioUpdateDTO usuarioUpdateDTO) {
+	public UsuarioResponseDTO update(Integer id, UsuarioUpdateDTO usuarioUpdateDTO) {
 		try {
 			logger.info("** Atualizacao de Usuario - Iniciando a atualizacao de usuário");
 			Optional<Usuario> user = findUserById(id);
@@ -74,7 +74,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			enderecoService.salvar(usuarioUpdateDTO.getEnderecos(), usuario);
 			
 			logger.info("** Atualizacao de Usuario - Finaliza as alteracoes de usuario");
-			return modelMapper.map(usuario, UsuarioDTO.class);
+			return modelMapper.map(usuario, UsuarioResponseDTO.class);
 		} catch (Exception e) {
 			logger.info("** Atualizacao de Usuario - Ocorreu um erro ao alterar os dados do usuario de id: {}", id);
 			throw new DataIntegrityViolationException("Ocorreu um erro ao atualizar esse usuário.", e.getCause());

@@ -23,9 +23,9 @@ public class EnderecoImovelServiceImpl implements EnderecoImovelService{
 	
 	@Override
 	public EnderecoImovelDTO salvar(EnderecoImovelDTO endereco, Integer userId) {
-		Optional<EnderecoImovelDTO> enderecoExistente = buscarEnderecoImovelPorCepENumero(endereco.getCep(), endereco.getNumero(), userId);
+		EnderecoImovelDTO enderecoExistente = buscarEnderecoImovelPorCepENumero(endereco.getCep(), endereco.getNumero(), userId);
 		
-		if(enderecoExistente.isPresent() && !enderecoExistente.get().getId().equals(endereco.getId())) {
+		if(enderecoExistente != null && !enderecoExistente.getId().equals(endereco.getId())) {
 			throw new ValidationException("Endereço já cadastrar com o cep: "+endereco.getCep()+" e número: "+endereco.getNumero());
 		}
 		

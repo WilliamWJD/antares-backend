@@ -8,11 +8,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.antares.domain.EnderecoImovel;
 import com.antares.domain.Imovel;
 import com.antares.domain.Usuario;
 import com.antares.dto.endereco.EnderecoImovelDTO;
 import com.antares.dto.imovel.ImovelDto;
 import com.antares.dto.usuario.UsuarioDTO;
+import com.antares.repository.EnderecoImovelRepository;
 import com.antares.repository.ImovelRepository;
 import com.antares.services.EnderecoImovelService;
 import com.antares.services.ImovelService;
@@ -36,30 +38,24 @@ public class ImovelServiceImpl implements ImovelService {
 	
 	@Autowired
 	private EnderecoImovelService enderecoImovelService;
+	
+	@Autowired
+	private EnderecoImovelRepository enderecoImovelRepository;
 
 	@Override
-	public Optional<ImovelDto> save(ImovelDto imovelDto, Integer userId) {
+	public Optional<Imovel> save(Imovel imovel, Integer userId) {
 		// verifica se o usuário da requisição existe
 		Optional<Usuario> usuario = usuarioService.findUserById(userId);
 		
 		if(!usuario.isPresent()) {
-			 throw new ObjectNotFoundException("Não foi possível encontrar um imóvel com id: "+imovelDto.getId()+" Tipo: "+Imovel.class.getName());
+			 throw new ObjectNotFoundException("Não foi possível encontrar um imóvel com id: "+imovel.getId()+" Tipo: "+Imovel.class.getName());
 		}
 		
-		// salva o endereço imovel
-		EnderecoImovelDTO endereco = enderecoImovelService.salvar(imovelDto.getEnderecoImovel());
+		imovel.setUsuario(usuario.get());
 		
-		// seta usuario e endereco no Dto
-		imovelDto.setUsuario(modelMapper.map(usuario.get(), UsuarioDTO.class));
-		imovelDto.setEnderecoImovel(endereco);
+		imovelRepository.save(imovel);
 		
-		// salva imovel
-		Imovel imovel = imovelRepository.save(modelMapper.map(imovelDto, Imovel.class));
-				
-		// monta o retorno json imovel
-		ImovelDto imovelResponse = modelMapper.map(imovel, ImovelDto.class);
-		
-		return Optional.of(imovelResponse);
+		return null;
 	}
 
 	@Override

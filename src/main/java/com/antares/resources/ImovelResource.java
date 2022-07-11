@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.antares.domain.Imovel;
 import com.antares.dto.imovel.ImovelDto;
 import com.antares.services.ImovelService;
 
@@ -34,14 +35,14 @@ public class ImovelResource {
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.value}", notes = "${swagger.api.operation.imovel.notes}", tags = {"Imóvel" })
 	@PostMapping
-	public ResponseEntity<Optional<ImovelDto>> save(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer userId){
-		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, userId));
+	public ResponseEntity<Optional<Imovel>> save(@Valid @RequestBody Imovel imovel, @RequestHeader Integer userId){
+		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovel, userId));
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.update.value}", notes = "${swagger.api.operation.imovel.update.notes}", tags = {"Imóvel" })
 	@PutMapping
-	public ResponseEntity<Optional<ImovelDto>> update(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer userId){
-		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, userId));
+	public ResponseEntity<Optional<Imovel>> update(@Valid @RequestBody Imovel imovel, @RequestHeader Integer userId){
+		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovel, userId));
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.buscar.value}", notes = "${swagger.api.operation.imovel.buscar.notes}", tags = {"Imóvel" })

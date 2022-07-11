@@ -22,10 +22,10 @@ public class EnderecoImovelServiceImpl implements EnderecoImovelService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public EnderecoImovelDTO salvar(EnderecoImovelDTO endereco) {
-		Optional<EnderecoImovel> enderecoExistente = enderecoRepository.findByCepAndNumero(endereco.getCep(), endereco.getNumero());
+	public EnderecoImovelDTO salvar(EnderecoImovelDTO endereco, Integer userId) {
+		Optional<EnderecoImovelDTO> enderecoExistente = buscarEnderecoImovelPorCepENumero(endereco.getCep(), endereco.getNumero(), userId);
 		
-		if(enderecoExistente.isPresent()) {
+		if(enderecoExistente.isPresent() && !enderecoExistente.get().getId().equals(endereco.getId())) {
 			throw new ValidationException("Endereço já cadastrar com o cep: "+endereco.getCep()+" e número: "+endereco.getNumero());
 		}
 		
@@ -40,5 +40,14 @@ public class EnderecoImovelServiceImpl implements EnderecoImovelService{
 			throw new ValidationException("Endereco não encontrado com o id: "+id);
 		}
 		return Optional.of(modelMapper.map(enderecoImovel, EnderecoImovelDTO.class));
+	}
+
+	@Override
+	public EnderecoImovelDTO buscarEnderecoImovelPorCepENumero(String cep, Integer numero, Integer userId) {
+		EnderecoImovel enderecoImovel = enderecoRepository.buscarEnderecoImovelPorNumeroCepImovelId(cep, numero, userId);
+		if(enderecoImovel == null) {
+			return null;
+		}
+		return modelMapper.map(enderecoImovel, EnderecoImovelDTO.class);
 	}
 }

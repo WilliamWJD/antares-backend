@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.antares.dto.endereco.EnderecoImovelDTO;
 
 public interface EnderecoImovelService {
-	EnderecoImovelDTO salvar(EnderecoImovelDTO endereco);
+	EnderecoImovelDTO salvar(EnderecoImovelDTO endereco, Integer userId);
 	Optional<EnderecoImovelDTO> buscarEnderecoImovelPorId(Integer id);
+	EnderecoImovelDTO buscarEnderecoImovelPorCepENumero(String cep, Integer numero, Integer userId);
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.antares.domain.Imovel;
 import com.antares.domain.Usuario;
+import com.antares.dto.endereco.EnderecoImovelDTO;
 import com.antares.dto.imovel.ImovelDto;
 import com.antares.dto.imovel.ImovelResponseDto;
 import com.antares.dto.usuario.UsuarioDTO;
@@ -18,6 +19,7 @@ import com.antares.repository.ImovelRepository;
 import com.antares.services.ImovelService;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;
+import com.antares.services.exceptions.ValidationException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +38,9 @@ public class ImovelServiceImpl implements ImovelService {
 	
 	@Autowired
 	private ImovelMapper imovelMapper;
+	
+	@Autowired
+	private EnderecoImovelServiceImpl enderecoImovelServiceImpl;
 
 	@Override
 	public ImovelResponseDto save(ImovelDto imovelDto, Integer userId) {
@@ -45,6 +50,15 @@ public class ImovelServiceImpl implements ImovelService {
 		if(!usuario.isPresent()) {
 			 throw new ObjectNotFoundException("Não foi possível encontrar um imóvel com id: "+imovelDto.getId()+" Tipo: "+Imovel.class.getName());
 		}
+		
+		//TODO: Possibilidade de refatorar essa condicional
+		// verifica se o endereço está associado a outro imóvel
+		EnderecoImovelDTO enderecoImovel = enderecoImovelServiceImpl.buscarEnderecoImovelPorCepENumero(imovelDto.getEnderecoImovel().getCep(), imovelDto.getEnderecoImovel().getNumero(), userId);
+		if(enderecoImovel != null && enderecoImovel.getId() != null) {
+			if(!enderecoImovel.getId().equals(imovelDto.getEnderecoImovel().getId())) {
+				throw new ValidationException("Endereço já cadastrar com o cep: "+imovelDto.getEnderecoImovel().getCep()+" e número: "+imovelDto.getEnderecoImovel().getNumero());				
+			}
+		}	
 		
 		imovelDto.setUsuario(modelMapper.map(usuario.get(), UsuarioDTO.class));
 		Imovel imovel = imovelRepository.save(imovelMapper.mapearDtoParaEntity(imovelDto));

@@ -88,6 +88,7 @@ public class ImovelServiceImpl implements ImovelService {
 	@Transactional
 	public void delete(Integer id, Integer userId) {
 		usuarioService.findUserById(userId);
+		findById(id, userId);
 		imovelRepository.deleteByIdAndUsuarioId(id, userId);
 	}
 

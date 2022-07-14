@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,9 +85,10 @@ public class ImovelServiceImpl implements ImovelService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(Integer id, Integer userId) {
 		usuarioService.findUserById(userId);
-		imovelRepository.deleteImovelByIdAndUsuarioId(id, userId);
+		imovelRepository.deleteByIdAndUsuarioId(id, userId);
 	}
 
 }

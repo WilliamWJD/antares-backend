@@ -16,9 +16,5 @@ import com.antares.domain.Imovel;
 public interface ImovelRepository extends JpaRepository<Imovel, Integer>{
 	public Optional<Imovel>findByIdAndUsuarioId(Integer id, Integer userId);
 	public List<Imovel> findAllByUsuarioId(Integer userId);
-	
-	@Transactional
-	@Modifying
-	@Query(value = "DELETE FROM Imovel AS i WHERE i.id =:id and i.usuario.id = :userId")
-	public void deleteImovelByIdAndUsuarioId(@Param("id") Integer id, @Param("userId") Integer userId);
+	void deleteByIdAndUsuarioId(Integer id, Integer userId);
 }

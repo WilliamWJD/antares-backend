@@ -29,8 +29,10 @@ import com.antares.domain.EnderecoUsuario;
 import com.antares.domain.Usuario;
 import com.antares.dto.endereco.EnderecoUsuarioDTO;
 import com.antares.dto.usuario.UsuarioDTO;
+import com.antares.mapper.UsuarioMapper;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.EnderecoUsuarioService;
+import com.antares.services.exceptions.DataIntegrityViolationException;
 import com.antares.services.exceptions.ObjectNotFoundException;
 
 @RunWith(SpringRunner.class)
@@ -38,7 +40,10 @@ public class UsuarioServiceImplTest {
 
 	@Spy
 	private ModelMapper mapper;
-
+	
+	@Mock
+	private UsuarioMapper usuarioMapper;
+	
 	@Mock
 	private UsuarioRepository usuarioRepository;
 
@@ -71,13 +76,13 @@ public class UsuarioServiceImplTest {
 
 		when(usuarioRepository.save(Mockito.any())).thenReturn(usuarioResponse);
 		when(enderecoService.salvar(Mockito.anyList(), Mockito.any())).thenReturn(enderecosUsuarioDtoResponse);
+		when(usuarioMapper.mapearDtoParaEntity(Mockito.any())).thenReturn(usuario);
 
 		// acao
 		service.save(mapper.map(usuario, UsuarioDTO.class));
 
 		// validacao
 		verify(usuarioRepository).save(Mockito.any());
-		verify(enderecoService).salvar(Mockito.anyList(), Mockito.any());
 	}
 	
 	@Test
@@ -104,5 +109,22 @@ public class UsuarioServiceImplTest {
 		
 		//verificacao
 		verify(usuarioRepository).findById(Mockito.anyInt());
+	}
+	
+	@Test
+	public void exceptionAoSalvarUsuario() throws ParseException {
+		//cenario
+		EnderecoUsuario endereco = EnderecoBuilder.umEnderecoUsuario().agora();
+		Usuario usuario = UsuarioBuilder.umUsuario().comEnderecos(Arrays.asList(endereco)).agora();
+		
+		when(usuarioRepository.save(Mockito.any())).thenThrow(DataIntegrityViolationException.class);
+		
+		exception.expect(DataIntegrityViolationException.class);
+		
+		//acao
+		service.save(mapper.map(usuario, UsuarioDTO.class));
+		
+		//verificacao
+		verify(usuarioRepository).save(Mockito.any());
 	}
 }

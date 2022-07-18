@@ -3,6 +3,7 @@ package com.antares.dto.endereco;
 import java.io.Serializable;
 
 import com.antares.domain.Usuario;
+import com.antares.dto.usuario.UsuarioDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,4 @@ public class EnderecoUsuarioDTO implements Serializable{
 	private String cep;
 	private String logradouro;
 	private Integer numero;
-	private Usuario usuario;
 }

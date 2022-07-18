@@ -1,12 +1,20 @@
 package com.antares.mapper;
 
+import java.io.Serializable;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.antares.domain.Usuario;
 import com.antares.dto.usuario.UsuarioDTO;
 
 @Component
-public class UsuarioMapper {
+public class UsuarioMapper implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private EnderecoUsuarioMapper enderecoUsuarioMapper;
 	
 	public Usuario mapearDtoParaEntity(UsuarioDTO dto) {
 		Usuario entity = new Usuario();
@@ -19,6 +27,7 @@ public class UsuarioMapper {
 		entity.setGenero(dto.getGenero());
 		entity.setEmail(dto.getEmail());
 		entity.setPassword(dto.getPassword());
+		entity.setEnderecos(dto.getEnderecos().stream().map(endereco -> enderecoUsuarioMapper.mapearDtoParaEntity(endereco, entity)).collect(Collectors.toList()));
 		return entity;
 	}
 }

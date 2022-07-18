@@ -1,19 +1,20 @@
 package com.antares.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.Serializable;
+
 import org.springframework.stereotype.Component;
 
 import com.antares.domain.EnderecoUsuario;
+import com.antares.domain.Usuario;
 import com.antares.dto.endereco.EnderecoUsuarioDTO;
 
 @Component
-public class EnderecoUsuarioMapper {
+public class EnderecoUsuarioMapper implements Serializable{
+	private static final long serialVersionUID = 1L;
 	
-	@Autowired
-	private UsuarioMapper usuarioMapper;
-	
-	public EnderecoUsuario mapearDtoParaEntity(EnderecoUsuarioDTO dto) {
+	public EnderecoUsuario mapearDtoParaEntity(EnderecoUsuarioDTO dto, Usuario usuario) {
 		EnderecoUsuario entity = new EnderecoUsuario();
+		
 		entity.setId(dto.getId());
 		entity.setEstado(dto.getEstado());
 		entity.setCidade(dto.getCidade());
@@ -21,7 +22,7 @@ public class EnderecoUsuarioMapper {
 		entity.setCep(dto.getCep());
 		entity.setLogradouro(dto.getLogradouro());
 		entity.setNumero(dto.getNumero());
-//		entity.setUsuario(usuarioMapper.mapearDtoParaEntity(dto.getUsuario()));
+		entity.setUsuario(usuario);
 		return entity;
 	}
 }

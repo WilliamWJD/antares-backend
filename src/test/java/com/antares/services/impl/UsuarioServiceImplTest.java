@@ -7,10 +7,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -28,6 +31,7 @@ import com.antares.dto.endereco.EnderecoUsuarioDTO;
 import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.repository.UsuarioRepository;
 import com.antares.services.EnderecoUsuarioService;
+import com.antares.services.exceptions.ObjectNotFoundException;
 
 @RunWith(SpringRunner.class)
 public class UsuarioServiceImplTest {
@@ -43,7 +47,10 @@ public class UsuarioServiceImplTest {
 
 	@InjectMocks
 	private UsuarioServiceImpl service;
-
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
 	@Before
 	public void setup() {
 		MockitoAnnotations.openMocks(this);
@@ -71,5 +78,31 @@ public class UsuarioServiceImplTest {
 		// validacao
 		verify(usuarioRepository).save(Mockito.any());
 		verify(enderecoService).salvar(Mockito.anyList(), Mockito.any());
+	}
+	
+	@Test
+	public void buscaUsuarioPorId() throws ParseException {
+		//cenario
+		Usuario usuario = UsuarioBuilder.umUsuario().comId(1).agora();
+		
+		when(usuarioRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
+		
+		//acao
+		service.findUserById(1);
+		
+		//verificacao
+		verify(usuarioRepository).findById(Mockito.anyInt());
+	}
+	
+	@Test(expected = ObjectNotFoundException.class)
+	public void lancaExceptionAoBuscaUsuarioPorId() throws ParseException {
+		//cenario
+		when(usuarioRepository.findById(Mockito.anyInt())).thenReturn(Optional.empty());
+		
+		//acao
+		service.findUserById(1);
+		
+		//verificacao
+		verify(usuarioRepository).findById(Mockito.anyInt());
 	}
 }

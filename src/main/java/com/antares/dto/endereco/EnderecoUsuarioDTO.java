@@ -2,9 +2,6 @@ package com.antares.dto.endereco;
 
 import java.io.Serializable;
 
-import com.antares.domain.Usuario;
-import com.antares.dto.usuario.UsuarioDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

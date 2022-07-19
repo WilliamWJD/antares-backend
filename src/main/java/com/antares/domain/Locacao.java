@@ -1,7 +1,6 @@
 package com.antares.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -31,7 +30,6 @@ public class Locacao implements Serializable{
 	private Integer id;
 	private Date dataInicio;
 	private Date dataFim;
-	BigDecimal valorAluguel;
 	Boolean status;
 
 	@ManyToOne

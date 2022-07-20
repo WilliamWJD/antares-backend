@@ -7,5 +7,5 @@ import com.antares.domain.Locacao;
 
 @Repository
 public interface LocacaoRepository extends JpaRepository<Locacao, Integer>{
-
+//	Locacao verificaSeImovelLocado(Integer idUsuario, Integer idLocacao, Integer idImovel);
 }

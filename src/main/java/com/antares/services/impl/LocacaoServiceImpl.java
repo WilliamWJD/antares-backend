@@ -1,5 +1,6 @@
 package com.antares.services.impl;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -34,12 +35,17 @@ public class LocacaoServiceImpl implements LocacaoService {
 
 	@Override
 	public LocacaoDto salvarLocacao(LocacaoDto locacaoDto, Integer userId) {
-
 		Optional<Usuario> usuario = usuarioServiceImpl.findUserById(userId);
-
+		
+		if(locacaoDto.getTempoContrato() == null)
+			locacaoDto.setTempoContrato(12);
+		
+		if(locacaoDto.getValorCaucao() == null)
+			locacaoDto.setValorCaucao(new BigDecimal(0));
+		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(locacaoDto.getDataInicio());
-		calendar.add(Calendar.MONTH, 12);
+		calendar.add(Calendar.MONTH, locacaoDto.getTempoContrato());
 		locacaoDto.setDataFim(calendar.getTime());
 
 		Locacao locacao = locacaoMapper.mapearDtoParaEntity(locacaoDto,

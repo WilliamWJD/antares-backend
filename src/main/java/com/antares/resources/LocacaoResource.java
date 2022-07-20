@@ -13,7 +13,7 @@ import com.antares.dto.locacao.LocacaoDto;
 import com.antares.services.impl.LocacaoServiceImpl;
 
 @RestController
-@RequestMapping(value = "/locacao")
+@RequestMapping(value = "/locacoes")
 public class LocacaoResource {
 	
 	@Autowired

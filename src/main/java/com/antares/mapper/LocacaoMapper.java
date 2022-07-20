@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.antares.domain.Imovel;
 import com.antares.domain.Inquilino;
 import com.antares.domain.Locacao;
-import com.antares.domain.Usuario;
 import com.antares.dto.locacao.LocacaoDto;
 
 @Component
@@ -18,6 +17,9 @@ public class LocacaoMapper implements Serializable {
 		Locacao entity = new Locacao();
 		entity.setDataInicio(locacaoDto.getDataInicio());
 		entity.setDataFim(locacaoDto.getDataFim());
+		entity.setTempoContrato(locacaoDto.getTempoContrato());
+		entity.setDiaPagamentoAluguel(locacaoDto.getDiaPagamentoAluguel());
+		entity.setValorCaucao(locacaoDto.getValorCaucao());
 		entity.setStatus(locacaoDto.getStatus());
 		entity.setInquilino(inquilino);
 		entity.setImovel(imovel);

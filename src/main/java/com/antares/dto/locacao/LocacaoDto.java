@@ -1,5 +1,6 @@
 package com.antares.dto.locacao;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import com.antares.dto.imovel.ImovelDto;
@@ -21,7 +22,11 @@ public class LocacaoDto {
 	private Integer id;
 	private Date dataInicio;
 	private Date dataFim;
+	private Integer tempoContrato;
+	private Integer diaPagamentoAluguel;
+	private BigDecimal valorCaucao;
 	private Boolean status;
+
 	private UsuarioDTO usuario;
 	private InquilinoDTO inquilino;
 	private ImovelDto imovel;

@@ -1,6 +1,7 @@
 package com.antares.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -30,7 +31,10 @@ public class Locacao implements Serializable{
 	private Integer id;
 	private Date dataInicio;
 	private Date dataFim;
-	Boolean status;
+	private Integer tempoContrato;
+	private Integer diaPagamentoAluguel;
+	private BigDecimal valorCaucao;
+	private Boolean status;
 
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")

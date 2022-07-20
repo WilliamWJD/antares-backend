@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.saml2.Saml2RelyingPartyProperties.Identityprovider.Verification;
 import org.springframework.stereotype.Service;
 
 import com.antares.domain.Imovel;
@@ -26,6 +27,9 @@ public class LocacaoServiceImpl implements LocacaoService {
 
 	@Autowired
 	private UsuarioServiceImpl usuarioServiceImpl;
+	
+	@Autowired
+	private ImovelServiceImpl imovelServiceImpl;
 
 	@Autowired
 	private ModelMapper mapper;
@@ -37,12 +41,24 @@ public class LocacaoServiceImpl implements LocacaoService {
 	public LocacaoDto salvarLocacao(LocacaoDto locacaoDto, Integer userId) {
 		Optional<Usuario> usuario = usuarioServiceImpl.findUserById(userId);
 		
+		//verifica se o imovel da locação existe
+		imovelServiceImpl.findById(locacaoDto.getImovel().getId(), userId);
+		
+		//verifica se o imovel passado está com uma locação ativa
+		Locacao verificaImovelLocado = locacaoRepository.verificaSeImovelLocado(userId, locacaoDto.getImovel().getId());
+		
+		if(verificaImovelLocado != null) {
+			throw new ValidationException("Esse imovel está com uma locacão ativa.");
+		}
+		
+		// seta tempo de contrato e valor de caução padrão
 		if(locacaoDto.getTempoContrato() == null)
 			locacaoDto.setTempoContrato(12);
 		
 		if(locacaoDto.getValorCaucao() == null)
 			locacaoDto.setValorCaucao(new BigDecimal(0));
 		
+		// realiza calculo de data de término do contrato
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(locacaoDto.getDataInicio());
 		calendar.add(Calendar.MONTH, locacaoDto.getTempoContrato());
@@ -51,7 +67,8 @@ public class LocacaoServiceImpl implements LocacaoService {
 		Locacao locacao = locacaoMapper.mapearDtoParaEntity(locacaoDto,
 				mapper.map(locacaoDto.getInquilino(), Inquilino.class),
 				mapper.map(locacaoDto.getImovel(), Imovel.class));
-
+		
+		// verifica se o usuario da requisição realmente existe
 		if(usuario.isPresent()) {
 			locacao.setUsuario(usuario.get());
 		}else {

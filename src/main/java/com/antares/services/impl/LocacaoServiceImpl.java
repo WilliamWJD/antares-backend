@@ -99,7 +99,7 @@ public class LocacaoServiceImpl implements LocacaoService {
 		}
 		
 		// encerra o contrato antigo
-		locacaoRepository.encerraContratoLocacao(locacaoDto.getId());
+//		locacaoRepository.encerraContratoLocacao(locacaoDto.getId());
 		
 		// cria um novo contrato de locacao
 		LocacaoDto novaLocacao = mapper.map(locacao, LocacaoDto.class);

@@ -24,7 +24,7 @@ public class UsuarioResource {
 	private UsuarioServiceImpl usuarioService;
 
 	@ApiOperation(value = "${swagger.api.operation.usuario.value}", notes = "${swagger.api.operation.usuario.notes}", tags = {"Usuário"})
-	@PostMapping
+	@PostMapping(value = "/salvar")
 	public ResponseEntity<UsuarioResponseDTO> save(@RequestBody UsuarioDTO usuario) {
 		UsuarioResponseDTO obj = usuarioService.save(usuario);
 		return ResponseEntity.ok().body(obj);

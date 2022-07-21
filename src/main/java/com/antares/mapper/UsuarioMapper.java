@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.antares.domain.Usuario;
+import com.antares.domain.enums.Perfil;
 import com.antares.dto.usuario.UsuarioDTO;
 
 @Component
@@ -28,6 +29,7 @@ public class UsuarioMapper implements Serializable{
 		entity.setEmail(dto.getEmail());
 		entity.setPassword(dto.getPassword());
 		entity.setEnderecos(dto.getEnderecos().stream().map(endereco -> enderecoUsuarioMapper.mapearDtoParaEntity(endereco, entity)).collect(Collectors.toList()));
+		entity.addPerfil(Perfil.toEnum(dto.getPerfil()));
 		return entity;
 	}
 }

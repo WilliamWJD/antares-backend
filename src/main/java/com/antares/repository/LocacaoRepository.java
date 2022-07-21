@@ -16,5 +16,6 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Integer> {
 			+ "and locacao.status = true;", nativeQuery = true)
 	Locacao verificaSeImovelLocado(@Param("idImovel") Integer idImovel, @Param("idUsuario") Integer idUsuario);
 	
-	Locacao encerraContratoLocacao(Integer idLocacao);
+//	@Query(value = "", nativeQuery = true)
+//	void encerraContratoLocacao(Integer idLocacao);
 }

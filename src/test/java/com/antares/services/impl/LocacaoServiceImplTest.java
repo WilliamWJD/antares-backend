@@ -146,7 +146,7 @@ public class LocacaoServiceImplTest {
 		when(usuarioServiceImpl.findUserById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
 		when(imovelServiceImpl.findById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
 		when(locacaoRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(locacao));
-		when(locacaoRepository.encerraContratoLocacao(Mockito.anyInt())).thenReturn(locacao);
+//		when(locacaoRepository.encerraContratoLocacao(Mockito.anyInt())).thenReturn(locacao);
 		when(locacaoRepository.save(Mockito.any())).thenReturn(locacaoEntrada);
 		
 		doReturn(formatter.parse("2023-05-08")).when(service).retornaDataDeHoje();
@@ -158,7 +158,7 @@ public class LocacaoServiceImplTest {
 		verify(usuarioServiceImpl, times(2)).findUserById(Mockito.anyInt());
 		verify(imovelServiceImpl, times(2)).findById(Mockito.anyInt(), Mockito.anyInt());
 		verify(locacaoRepository, times(1)).findById(Mockito.anyInt());
-		verify(locacaoRepository, times(1)).encerraContratoLocacao(Mockito.anyInt());
+//		verify(locacaoRepository, times(1)).encerraContratoLocacao(Mockito.anyInt());
 	}
 	
 	@Test

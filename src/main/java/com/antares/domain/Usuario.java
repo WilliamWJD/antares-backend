@@ -39,15 +39,20 @@ public class Usuario implements Serializable {
 	private Integer id;
 	private String nome;
 	private Date dataNascimento;
+	
 	@Column(unique = true)
 	private String rg;
+	
 	@Column(unique = true)
 	private String cpf;
+	
 	private String profissao;
 	private String estadoCivil;
 	private String genero;
+	
 	@Column(unique = true)
 	private String email;
+	
 	private String password;
 
 	public Usuario() {

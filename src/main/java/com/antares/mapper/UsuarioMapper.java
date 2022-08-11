@@ -29,7 +29,9 @@ public class UsuarioMapper implements Serializable{
 		entity.setEmail(dto.getEmail());
 		entity.setPassword(dto.getPassword());
 		entity.setEnderecos(dto.getEnderecos().stream().map(endereco -> enderecoUsuarioMapper.mapearDtoParaEntity(endereco, entity)).collect(Collectors.toList()));
-		entity.addPerfil(Perfil.toEnum(dto.getPerfil()));
+		if(dto.getPerfil() != null) {
+			entity.addPerfil(Perfil.toEnum(dto.getPerfil()));			
+		}
 		return entity;
 	}
 }

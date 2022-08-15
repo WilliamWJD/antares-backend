@@ -21,6 +21,7 @@ public class UsuarioMapper implements Serializable{
 		Usuario entity = new Usuario();
 		entity.setId(dto.getId());
 		entity.setNome(dto.getNome());
+		entity.setDataNascimento(dto.getDataNascimento());
 		entity.setRg(dto.getRg());
 		entity.setCpf(dto.getCpf());
 		entity.setProfissao(dto.getProfissao());

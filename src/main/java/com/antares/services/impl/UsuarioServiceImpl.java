@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.antares.dto.usuario.UsuarioDTO;
 import com.antares.dto.usuario.UsuarioResponseDTO;
 import com.antares.mapper.UsuarioMapper;
 import com.antares.repository.UsuarioRepository;
+import com.antares.security.UserSS;
 import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.DataIntegrityViolationException;
 import com.antares.services.exceptions.ObjectNotFoundException;
@@ -32,7 +34,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public UsuarioResponseDTO save(UsuarioDTO usuarioCadastroDTO) {
-		try {
+		try {	
 			if(usuarioCadastroDTO.getId() != null) {
 				findUserById(usuarioCadastroDTO.getId());
 			}
@@ -56,5 +58,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 					"Usuário não encontrado com o id: " + id + ", tipo: " + Usuario.class.getName());
 		}
 		return usuario;
+	}
+	
+	public UserSS authenticated() {
+		try {
+			return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 }

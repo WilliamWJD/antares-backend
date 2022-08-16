@@ -14,17 +14,19 @@ import com.antares.domain.Usuario;
 import com.antares.dto.inquilino.InquilinoCadastroDto;
 import com.antares.dto.inquilino.InquilinoDTO;
 import com.antares.repository.InquilinoRepository;
+import com.antares.security.UserSS;
 import com.antares.services.InquilinoService;
 import com.antares.services.UsuarioService;
 
 import com.antares.services.exceptions.DataIntegrityViolationException;
 import com.antares.services.exceptions.ObjectNotFoundException;
+import com.antares.services.exceptions.ValidationException;
 
 @Service
 public class InquilinoServiceImpl implements InquilinoService {
 
 	@Autowired
-	UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private InquilinoRepository inquilinoRepository;
@@ -33,12 +35,18 @@ public class InquilinoServiceImpl implements InquilinoService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO, Integer userId) {
+	public InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO) {
 		try {
-			Optional<Usuario> usuario = usuarioService.findUserById(userId);
+			UserSS user = usuarioService.authenticated();
+			
+			if(user == null) {
+				throw new ValidationException("Acesso negado");
+			}
+			
+			Optional<Usuario> usuario = usuarioService.findUserById(user.getId());
 
 			if (inquilinoCadastroDTO.getId() != null) {
-				buscar(inquilinoCadastroDTO.getId(), userId);
+				buscar(inquilinoCadastroDTO.getId());
 			}
 
 			if(usuario.isPresent()) {
@@ -53,18 +61,28 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public Page<InquilinoDTO> findAllInquilinosByUsuario(Integer userId, Integer page, Integer linesPerPage,
+	public Page<InquilinoDTO> findAllInquilinosByUsuario(Integer page, Integer linesPerPage,
 			String orderBy, String direction) {
+		UserSS user = usuarioService.authenticated();
+		if(user == null) {
+			throw new ValidationException("Acesso negado");
+		}
+		Optional<Usuario> usuario = usuarioService.findUserById(user.getId());
+		
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		Page<Inquilino> inquilinosPageable = inquilinoRepository.findByUsuarioId(userId, pageRequest);
+		Page<Inquilino> inquilinosPageable = inquilinoRepository.findByUsuarioId(usuario.get().getId(), pageRequest);
 		return inquilinosPageable.map(i -> modelMapper.map(i, InquilinoDTO.class));
 	}
 
 	@Override
-	public Optional<InquilinoDTO> buscar(Integer id, Integer userId) {
-		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, userId);
-
-		usuarioService.findUserById(userId);
+	public Optional<InquilinoDTO> buscar(Integer id) {
+		UserSS user = usuarioService.authenticated();
+		if(user == null) {
+			throw new ValidationException("Acesso negado");
+		}
+		Optional<Usuario> usuario = usuarioService.findUserById(user.getId());
+		
+		Optional<Inquilino> inquilino = inquilinoRepository.findByIdAndUsuarioId(id, usuario.get().getId());
 
 		if (!inquilino.isPresent()) {
 			throw new ObjectNotFoundException(
@@ -75,10 +93,8 @@ public class InquilinoServiceImpl implements InquilinoService {
 	}
 
 	@Override
-	public void delete(Integer id, Integer userId) {
-		usuarioService.findUserById(userId);
-		
-		Optional<InquilinoDTO> inquilino = buscar(id, userId);
+	public void delete(Integer id) {		
+		Optional<InquilinoDTO> inquilino = buscar(id);
 		
 		if(!inquilino.isPresent()) {
 			throw new ObjectNotFoundException("Inquilino não encontrado com o id: " + id + ", tipo: " + Inquilino.class.getName());

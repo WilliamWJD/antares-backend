@@ -22,7 +22,6 @@ import javax.persistence.OneToMany;
 import com.antares.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

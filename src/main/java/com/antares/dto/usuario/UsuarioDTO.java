@@ -3,15 +3,12 @@ package com.antares.dto.usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.antares.domain.enums.Perfil;
 import com.antares.dto.endereco.EnderecoUsuarioDTO;
 
 import lombok.AllArgsConstructor;

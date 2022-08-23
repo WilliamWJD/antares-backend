@@ -35,32 +35,32 @@ public class ImovelResource {
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.value}", notes = "${swagger.api.operation.imovel.notes}", tags = {"Imóvel" })
 	@PostMapping
-	public ResponseEntity<ImovelResponseDto> save(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer userId){
-		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, userId));
+	public ResponseEntity<ImovelResponseDto> save(@Valid @RequestBody ImovelDto imovelDto){
+		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto));
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.update.value}", notes = "${swagger.api.operation.imovel.update.notes}", tags = {"Imóvel" })
 	@PutMapping
-	public ResponseEntity<ImovelResponseDto> update(@Valid @RequestBody ImovelDto imovelDto, @RequestHeader Integer userId){
-		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto, userId));
+	public ResponseEntity<ImovelResponseDto> update(@Valid @RequestBody ImovelDto imovelDto){
+		return ResponseEntity.status(HttpStatus.CREATED).body(imovelService.save(imovelDto));
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.buscar.value}", notes = "${swagger.api.operation.imovel.buscar.notes}", tags = {"Imóvel" })
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Optional<ImovelResponseDto>> buscar(@PathVariable Integer id, @RequestHeader Integer userId){
-		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findById(id, userId));
+	public ResponseEntity<Optional<ImovelResponseDto>> buscar(@PathVariable Integer id){
+		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findById(id));
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.buscar.todos.value}", notes = "${swagger.api.operation.imovel.buscar.todos.notes}", tags = {"Imóvel" })
 	@GetMapping
-	public ResponseEntity<List<ImovelResponseDto>> findAll(@RequestHeader Integer userId){
-		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findAll(userId));
+	public ResponseEntity<List<ImovelResponseDto>> findAll(){
+		return ResponseEntity.status(HttpStatus.OK).body(imovelService.findAll());
 	}
 	
 	@ApiOperation(value = "${swagger.api.operation.imovel.delete.value}", notes = "${swagger.api.operation.imovel.delete.notes}", tags = {"Imóvel" })
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id, @RequestHeader Integer userId){
-		imovelService.delete(id, userId);
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
+		imovelService.delete(id);
 		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 }

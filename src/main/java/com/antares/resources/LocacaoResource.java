@@ -20,7 +20,7 @@ public class LocacaoResource {
 	private LocacaoServiceImpl locacaoServiceImpl;
 	
 	@PostMapping
-	public ResponseEntity<LocacaoDto> salvaLocacao(@RequestBody LocacaoDto locacaoDto, @RequestHeader Integer userId){
-		return ResponseEntity.status(HttpStatus.CREATED).body(locacaoServiceImpl.salvarLocacao(locacaoDto, userId));
+	public ResponseEntity<LocacaoDto> salvaLocacao(@RequestBody LocacaoDto locacaoDto){
+		return ResponseEntity.status(HttpStatus.CREATED).body(locacaoServiceImpl.salvarLocacao(locacaoDto));
 	}
 }

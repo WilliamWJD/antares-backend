@@ -78,10 +78,10 @@ public class LocacaoServiceImplTest {
 
 		when(locacaoRepository.save(Mockito.any())).thenReturn(locacaoSaida);
 		when(usuarioServiceImpl.findUserById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
-		when(imovelServiceImpl.findById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
+		when(imovelServiceImpl.findById(Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
 
 		// acao
-		service.salvarLocacao(mapper.map(locacaoEntrada, LocacaoDto.class), usuario.getId());
+		service.salvarLocacao(mapper.map(locacaoEntrada, LocacaoDto.class));
 
 		// verificacao
 		verify(locacaoRepository, times(1)).save(Mockito.any());
@@ -90,7 +90,6 @@ public class LocacaoServiceImplTest {
 	@Test
 	public void retornaExcessaoCasoUsuarioNaoExista() throws ParseException {
 		// cenario
-		Usuario usuario = UsuarioBuilder.umUsuario().comId(1).agora();
 		Inquilino inquilino = InquilinoBuilder.umInquilino().comId(1).agora();
 		Imovel imovel = ImovelBuilder.umImovel().comId(1).agora();
 
@@ -103,7 +102,7 @@ public class LocacaoServiceImplTest {
 		exception.expectMessage("Usuario não encontrado");
 
 		// acao
-		service.salvarLocacao(mapper.map(locacaoEntrada, LocacaoDto.class), usuario.getId());
+		service.salvarLocacao(mapper.map(locacaoEntrada, LocacaoDto.class));
 	}
 
 	@Test
@@ -123,7 +122,7 @@ public class LocacaoServiceImplTest {
 		exception.expect(ValidationException.class);
 		exception.expectMessage("Esse imovel está com uma locacão ativa.");
 
-		service.salvarLocacao(mapper.map(locacaoEntrada, LocacaoDto.class), usuario.getId());
+		service.salvarLocacao(mapper.map(locacaoEntrada, LocacaoDto.class));
 
 		// validacao
 		verify(locacaoRepository, times(1)).save(Mockito.any());
@@ -144,7 +143,7 @@ public class LocacaoServiceImplTest {
 		Locacao locacao = LocacaoBuilder.umaLocacao().comId(1).comDataTerminoContrato(formatter.parse("2023-05-07")).comInquilino(inquilino).comImovel(imovel).agora();
 		
 		when(usuarioServiceImpl.findUserById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
-		when(imovelServiceImpl.findById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
+		when(imovelServiceImpl.findById(Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
 		when(locacaoRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(locacao));
 //		when(locacaoRepository.encerraContratoLocacao(Mockito.anyInt())).thenReturn(locacao);
 		when(locacaoRepository.save(Mockito.any())).thenReturn(locacaoEntrada);
@@ -152,11 +151,11 @@ public class LocacaoServiceImplTest {
 		doReturn(formatter.parse("2023-05-08")).when(service).retornaDataDeHoje();
 		
 		//acao
-		service.realizaRenovacaoContrato(mapper.map(locacao, LocacaoDto.class), usuario.getId());
+		service.realizaRenovacaoContrato(mapper.map(locacao, LocacaoDto.class));
 		
 		//validacao
 		verify(usuarioServiceImpl, times(2)).findUserById(Mockito.anyInt());
-		verify(imovelServiceImpl, times(2)).findById(Mockito.anyInt(), Mockito.anyInt());
+		verify(imovelServiceImpl, times(2)).findById(Mockito.anyInt());
 		verify(locacaoRepository, times(1)).findById(Mockito.anyInt());
 //		verify(locacaoRepository, times(1)).encerraContratoLocacao(Mockito.anyInt());
 	}
@@ -175,18 +174,18 @@ public class LocacaoServiceImplTest {
 		Locacao locacao = LocacaoBuilder.umaLocacao().comId(1).comDataTerminoContrato(formatter.parse("2023-05-07")).comInquilino(inquilino).comImovel(imovel).agora();
 		
 		when(usuarioServiceImpl.findUserById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
-		when(imovelServiceImpl.findById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
+		when(imovelServiceImpl.findById(Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
 		when(locacaoRepository.findById(Mockito.anyInt())).thenReturn(Optional.of(locacao));
 		
 		exception.expect(ValidationException.class);
 		exception.expectMessage("Não e possivel renovar um contrato que está em vigor");
 		
 		//acao
-		service.realizaRenovacaoContrato(mapper.map(locacao, LocacaoDto.class), usuario.getId());
+		service.realizaRenovacaoContrato(mapper.map(locacao, LocacaoDto.class));
 		
 		//validacao
 		verify(usuarioServiceImpl, times(2)).findUserById(Mockito.anyInt());
-		verify(imovelServiceImpl, times(2)).findById(Mockito.anyInt(), Mockito.anyInt());
+		verify(imovelServiceImpl, times(2)).findById(Mockito.anyInt());
 		verify(locacaoRepository, times(1)).findById(Mockito.anyInt());
 	}
 	
@@ -204,18 +203,18 @@ public class LocacaoServiceImplTest {
 		Locacao locacao = LocacaoBuilder.umaLocacao().comId(1).comDataTerminoContrato(formatter.parse("2023-05-07")).comInquilino(inquilino).comImovel(imovel).agora();
 		
 		when(usuarioServiceImpl.findUserById(Mockito.anyInt())).thenReturn(Optional.of(usuario));
-		when(imovelServiceImpl.findById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
+		when(imovelServiceImpl.findById(Mockito.anyInt())).thenReturn(Optional.of(imovelResponse));
 		when(locacaoRepository.findById(Mockito.anyInt())).thenReturn(Optional.empty());
 		
 		exception.expect(ObjectNotFoundException.class);
 		exception.expectMessage("Locacao não encontrada");
 		
 		//acao
-		service.realizaRenovacaoContrato(mapper.map(locacao, LocacaoDto.class), usuario.getId());
+		service.realizaRenovacaoContrato(mapper.map(locacao, LocacaoDto.class));
 		
 		//validacao
 		verify(usuarioServiceImpl, times(2)).findUserById(Mockito.anyInt());
-		verify(imovelServiceImpl, times(2)).findById(Mockito.anyInt(), Mockito.anyInt());
+		verify(imovelServiceImpl, times(2)).findById(Mockito.anyInt());
 		verify(locacaoRepository, times(1)).findById(Mockito.anyInt());
 	}
 }

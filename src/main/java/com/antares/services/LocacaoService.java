@@ -3,6 +3,6 @@ package com.antares.services;
 import com.antares.dto.locacao.LocacaoDto;
 
 public interface LocacaoService {
-	LocacaoDto salvarLocacao(LocacaoDto locacaoDto, Integer userId);
-	LocacaoDto realizaRenovacaoContrato(LocacaoDto locacaoDto, Integer userId);
+	LocacaoDto salvarLocacao(LocacaoDto locacaoDto);
+	LocacaoDto realizaRenovacaoContrato(LocacaoDto locacaoDto);
 }

@@ -16,7 +16,9 @@ import com.antares.domain.Usuario;
 import com.antares.dto.locacao.LocacaoDto;
 import com.antares.mapper.LocacaoMapper;
 import com.antares.repository.LocacaoRepository;
+import com.antares.security.UserSS;
 import com.antares.services.LocacaoService;
+import com.antares.services.UsuarioService;
 import com.antares.services.exceptions.ObjectNotFoundException;
 import com.antares.services.exceptions.ValidationException;
 
@@ -27,7 +29,7 @@ public class LocacaoServiceImpl implements LocacaoService {
 	private LocacaoRepository locacaoRepository;
 
 	@Autowired
-	private UsuarioServiceImpl usuarioServiceImpl;
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private ImovelServiceImpl imovelServiceImpl;
@@ -39,14 +41,21 @@ public class LocacaoServiceImpl implements LocacaoService {
 	private LocacaoMapper locacaoMapper;
 
 	@Override
-	public LocacaoDto salvarLocacao(LocacaoDto locacaoDto, Integer userId) {
-		Optional<Usuario> usuario = usuarioServiceImpl.findUserById(userId);
+	public LocacaoDto salvarLocacao(LocacaoDto locacaoDto) {
+		UserSS user = usuarioService.authenticated();
+
+		if (user == null) {
+			throw new ValidationException("Acesso negado");
+		}
+
+		Optional<Usuario> usuario = usuarioService.findUserById(user.getId());
 
 		// verifica se o imovel da locação existe
-		imovelServiceImpl.findById(locacaoDto.getImovel().getId(), userId);
+		imovelServiceImpl.findById(locacaoDto.getImovel().getId());
 
 		// verifica se o imovel passado está com uma locação ativa
-		Locacao verificaImovelLocado = locacaoRepository.verificaSeImovelLocado(userId, locacaoDto.getImovel().getId());
+		Locacao verificaImovelLocado = locacaoRepository.verificaSeImovelLocado(usuario.get().getId(),
+				locacaoDto.getImovel().getId());
 
 		if (verificaImovelLocado != null) {
 			throw new ValidationException("Esse imovel está com uma locacão ativa.");
@@ -69,45 +78,44 @@ public class LocacaoServiceImpl implements LocacaoService {
 				mapper.map(locacaoDto.getInquilino(), Inquilino.class),
 				mapper.map(locacaoDto.getImovel(), Imovel.class));
 
-		// verifica se o usuario da requisição realmente existe
-		if (usuario.isPresent()) {
-			locacao.setUsuario(usuario.get());
-		} else {
-			throw new ValidationException("Usuario não encontrado");
-		}
+		locacao.setUsuario(usuario.get());
 
 		return mapper.map(locacaoRepository.save(locacao), LocacaoDto.class);
 	}
 
 	@Override
-	public LocacaoDto realizaRenovacaoContrato(LocacaoDto locacaoDto, Integer userId) {
-		usuarioServiceImpl.findUserById(userId);
+	public LocacaoDto realizaRenovacaoContrato(LocacaoDto locacaoDto) {
+		UserSS user = usuarioService.authenticated();
+
+		if (user == null) {
+			throw new ValidationException("Acesso negado");
+		}
+
+		Optional<Usuario> usuario = usuarioService.findUserById(user.getId());
 
 		// verifica se o imovel da locação existe
-		imovelServiceImpl.findById(locacaoDto.getImovel().getId(), userId);
-		
+		imovelServiceImpl.findById(locacaoDto.getImovel().getId());
+
 		// retorna a locacao
 		Optional<Locacao> locacao = locacaoRepository.findById(locacaoDto.getId());
-		
-		if(!locacao.isPresent()) {
+
+		if (!locacao.isPresent()) {
 			throw new ObjectNotFoundException("Locacao não encontrada");
 		}
-		
+
 		// verifica se a data de termino do contrato e menor que a data atual
-		if(locacaoDto.getDataFim().compareTo(retornaDataDeHoje()) > 0) {
+		if (locacaoDto.getDataFim().compareTo(retornaDataDeHoje()) > 0) {
 			throw new ValidationException("Não e possivel renovar um contrato que está em vigor");
 		}
-		
+
 		// encerra o contrato antigo
 //		locacaoRepository.encerraContratoLocacao(locacaoDto.getId());
-		
+
 		// cria um novo contrato de locacao
 		LocacaoDto novaLocacao = mapper.map(locacao, LocacaoDto.class);
 		novaLocacao.setId(null);
-		
-		salvarLocacao(locacaoDto, userId);
-		
-		return null;
+
+		return salvarLocacao(locacaoDto);
 	}
 
 	protected Date retornaDataDeHoje() {

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.antares.dto.locacao.LocacaoDto;
+import com.antares.dto.LocacaoDto;
+import com.antares.dto.LocacaoDtoEntrada;
 import com.antares.services.impl.LocacaoServiceImpl;
 
 @RestController
@@ -20,7 +21,7 @@ public class LocacaoResource {
 	private LocacaoServiceImpl locacaoServiceImpl;
 	
 	@PostMapping
-	public ResponseEntity<LocacaoDto> salvaLocacao(@RequestBody LocacaoDto locacaoDto){
-		return ResponseEntity.status(HttpStatus.CREATED).body(locacaoServiceImpl.salvarLocacao(locacaoDto));
+	public ResponseEntity<LocacaoDto> salvaLocacao(@RequestBody LocacaoDtoEntrada locacaoDtoEntrada){
+		return ResponseEntity.status(HttpStatus.CREATED).body(locacaoServiceImpl.salvarLocacao(locacaoDtoEntrada));
 	}
 }

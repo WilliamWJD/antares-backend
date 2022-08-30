@@ -1,9 +1,6 @@
-package com.antares.dto.imovel;
+package com.antares.dto;
 
 import java.io.Serializable;
-
-import com.antares.dto.endereco.EnderecoImovelDTO;
-import com.antares.dto.usuario.UsuarioResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

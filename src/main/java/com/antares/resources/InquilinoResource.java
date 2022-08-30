@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.antares.dto.inquilino.InquilinoCadastroDto;
-import com.antares.dto.inquilino.InquilinoDTO;
+import com.antares.dto.InquilinoCadastroDto;
+import com.antares.dto.InquilinoDTO;
 import com.antares.services.impl.InquilinoServiceImpl;
 
 import io.swagger.annotations.Api;

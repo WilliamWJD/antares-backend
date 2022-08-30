@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.antares.domain.Inquilino;
 import com.antares.domain.Usuario;
-import com.antares.dto.inquilino.InquilinoCadastroDto;
-import com.antares.dto.inquilino.InquilinoDTO;
+import com.antares.dto.InquilinoCadastroDto;
+import com.antares.dto.InquilinoDTO;
 import com.antares.repository.InquilinoRepository;
 import com.antares.security.UserSS;
 import com.antares.services.InquilinoService;

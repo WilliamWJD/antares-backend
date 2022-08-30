@@ -1,9 +1,6 @@
-package com.antares.dto.imovel;
+package com.antares.dto;
 
 import java.io.Serializable;
-
-import com.antares.dto.endereco.EnderecoImovelDTO;
-import com.antares.dto.usuario.UsuarioDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,13 +13,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ImovelDto implements Serializable{
+public class EnderecoImovelDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String descricao;
-	private Boolean garagem;
-	private double valor;
-	private UsuarioDTO usuario;
-	private EnderecoImovelDTO enderecoImovel;
+	private String estado;
+	private String cidade;
+	private String bairro;
+	private String cep;
+	private String logradouro;
+	private Integer numero;
 }

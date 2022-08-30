@@ -3,7 +3,7 @@ package com.antares.mapper;
 import org.springframework.stereotype.Component;
 
 import com.antares.domain.EnderecoImovel;
-import com.antares.dto.endereco.EnderecoImovelDTO;
+import com.antares.dto.EnderecoImovelDTO;
 
 @Component
 public class EnderecoMapper {

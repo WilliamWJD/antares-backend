@@ -1,9 +1,7 @@
-package com.antares.dto.inquilino;
+package com.antares.dto;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import com.antares.dto.usuario.UsuarioResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

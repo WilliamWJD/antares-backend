@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.antares.domain.Imovel;
-import com.antares.dto.imovel.ImovelDto;
+import com.antares.dto.ImovelDto;
 
 @Component
 public class ImovelMapper {

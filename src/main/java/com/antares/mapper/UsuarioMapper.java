@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.antares.domain.Usuario;
 import com.antares.domain.enums.Perfil;
-import com.antares.dto.usuario.UsuarioDTO;
+import com.antares.dto.UsuarioDTO;
 
 @Component
 public class UsuarioMapper implements Serializable{

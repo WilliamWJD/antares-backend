@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.antares.dto.imovel.ImovelDto;
-import com.antares.dto.imovel.ImovelResponseDto;
+import com.antares.dto.ImovelDto;
+import com.antares.dto.ImovelResponseDto;
 import com.antares.services.ImovelService;
 
 import io.swagger.annotations.Api;

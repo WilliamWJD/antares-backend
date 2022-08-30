@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.antares.domain.EnderecoImovel;
-import com.antares.dto.endereco.EnderecoImovelDTO;
+import com.antares.dto.EnderecoImovelDTO;
 import com.antares.repository.EnderecoImovelRepository;
 import com.antares.services.EnderecoImovelService;
 import com.antares.services.exceptions.ValidationException;

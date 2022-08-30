@@ -1,4 +1,4 @@
-package com.antares.dto.usuario;
+package com.antares.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,8 +8,6 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import com.antares.dto.endereco.EnderecoUsuarioDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

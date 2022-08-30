@@ -1,4 +1,4 @@
-package com.antares.dto.usuario;
+package com.antares.dto;
 
 import java.io.Serializable;
 

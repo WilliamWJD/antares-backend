@@ -3,8 +3,8 @@ package com.antares.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.antares.dto.imovel.ImovelDto;
-import com.antares.dto.imovel.ImovelResponseDto;
+import com.antares.dto.ImovelDto;
+import com.antares.dto.ImovelResponseDto;
 
 public interface ImovelService {
 	ImovelResponseDto save(ImovelDto imovelDto);

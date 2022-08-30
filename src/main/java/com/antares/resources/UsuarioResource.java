@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.antares.dto.usuario.UsuarioDTO;
-import com.antares.dto.usuario.UsuarioResponseDTO;
+import com.antares.dto.UsuarioDTO;
+import com.antares.dto.UsuarioResponseDTO;
 import com.antares.services.impl.UsuarioServiceImpl;
 
 import io.swagger.annotations.Api;

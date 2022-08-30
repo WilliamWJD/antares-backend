@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.antares.domain.EnderecoUsuario;
 import com.antares.domain.Usuario;
-import com.antares.dto.endereco.EnderecoUsuarioDTO;
+import com.antares.dto.EnderecoUsuarioDTO;
 
 @Component
 public class EnderecoUsuarioMapper implements Serializable{

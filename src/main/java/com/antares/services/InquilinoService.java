@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
-import com.antares.dto.inquilino.InquilinoCadastroDto;
-import com.antares.dto.inquilino.InquilinoDTO;
+import com.antares.dto.InquilinoCadastroDto;
+import com.antares.dto.InquilinoDTO;
 
 public interface InquilinoService {
 	InquilinoDTO save(InquilinoCadastroDto inquilinoCadastroDTO);

@@ -2,7 +2,7 @@ package com.antares.services;
 
 import java.util.Optional;
 
-import com.antares.dto.endereco.EnderecoImovelDTO;
+import com.antares.dto.EnderecoImovelDTO;
 
 public interface EnderecoImovelService {
 	EnderecoImovelDTO salvar(EnderecoImovelDTO endereco, Integer userId);

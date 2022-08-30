@@ -1,11 +1,7 @@
-package com.antares.dto.locacao;
+package com.antares.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
-import com.antares.dto.imovel.ImovelDto;
-import com.antares.dto.inquilino.InquilinoDTO;
-import com.antares.dto.usuario.UsuarioDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +14,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class LocacaoDto {
+public class LocacaoDtoEntrada {
 	private Integer id;
 	private Date dataInicio;
 	private Date dataFim;
@@ -27,7 +23,6 @@ public class LocacaoDto {
 	private BigDecimal valorCaucao;
 	private Boolean status;
 
-	private UsuarioDTO usuario;
-	private InquilinoDTO inquilino;
-	private ImovelDto imovel;
+	private Integer inquilinoId;
+	private Integer imovelId;
 }

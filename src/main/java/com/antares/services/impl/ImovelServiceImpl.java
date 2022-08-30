@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.antares.domain.Imovel;
 import com.antares.domain.Usuario;
-import com.antares.dto.endereco.EnderecoImovelDTO;
-import com.antares.dto.imovel.ImovelDto;
-import com.antares.dto.imovel.ImovelResponseDto;
-import com.antares.dto.usuario.UsuarioDTO;
+import com.antares.dto.EnderecoImovelDTO;
+import com.antares.dto.ImovelDto;
+import com.antares.dto.ImovelResponseDto;
+import com.antares.dto.UsuarioDTO;
 import com.antares.mapper.ImovelMapper;
 import com.antares.repository.ImovelRepository;
 import com.antares.security.UserSS;
